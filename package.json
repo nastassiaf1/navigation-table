@@ -1,0 +1,31 @@
+{
+  "name": "react-practice",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "esbuild": "0.19.11"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.1.0",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.5",
+    "node-sass": "^9.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.21.3",
+    "typescript": "^5.3.3"
+  },
+  "scripts": {
+    "build": "esbuild src/index.tsx --outdir=dist --bundle",
+    "dev": "npm run build -- --watch --servedir='./' --serve=3000 --loader:.tsx=tsx"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }
+}
