@@ -5,12 +5,14 @@
   "devDependencies": {
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
-    "esbuild": "0.19.11"
+    "esbuild": "^0.19.12",
+    "esbuild-plugin-sass": "^1.0.1"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.5",
+    "esbuild-sass-plugin": "^2.16.1",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,8 +21,8 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "build": "esbuild src/index.tsx --outdir=dist --bundle",
-    "dev": "npm run build -- --watch --servedir='./' --serve=3000 --loader:.tsx=tsx"
+    "build": "node esbuild.mjs",
+    "dev": "node esbuild.mjs --watch"
   },
   "eslintConfig": {
     "extends": [
