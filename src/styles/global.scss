@@ -20,4 +20,8 @@ a {
     &:hover {
         text-shadow: 1px 1px black;
     }
+
+    &.active {
+        text-decoration: underline;;
+    }
 }

@@ -24,7 +24,7 @@ export default function App() {
                     className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "active" : ""
                     }
-                    >
+                >
                     About us
                 </NavLink>
             </nav>
