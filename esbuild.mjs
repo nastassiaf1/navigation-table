@@ -10,7 +10,7 @@ if (process.argv.includes('--watch')) {
 
   const { host, port } = await ctx.serve({
     servedir: './',
-    port: 3000,
+    port: 4200,
   })
 
   console.log(host, port)

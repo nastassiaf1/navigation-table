@@ -14,7 +14,10 @@
     "@types/node": "^20.11.5",
     "esbuild-css-modules-plugin": "^3.1.0",
     "esbuild-sass-plugin": "^2.16.1",
+    "i": "^0.3.7",
+    "json-server": "^1.0.0-alpha.22",
     "node-sass": "^9.0.0",
+    "npm": "^10.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
@@ -23,7 +26,8 @@
   },
   "scripts": {
     "build": "node esbuild.mjs",
-    "dev": "node esbuild.mjs --watch"
+    "dev": "node esbuild.mjs --watch",
+    "start-server": "json-server --watch db.json --port 3000"
   },
   "eslintConfig": {
     "extends": [
