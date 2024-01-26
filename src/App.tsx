@@ -16,7 +16,7 @@ export default function App() {
                     className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "active" : ""
                     }
-                    >
+                >
                     Table
                 </NavLink>
                 <NavLink

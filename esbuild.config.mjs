@@ -4,10 +4,9 @@ import cssModulesPlugin from 'esbuild-css-modules-plugin';
 const options = {
     entryPoints: ['src/index.tsx'],
     bundle: true,
-    minify: true,
+    minify: false,
     sourcemap: true,
     outdir: 'dist',
-    outfile: '',
     plugins: [sassPlugin(), cssModulesPlugin()],
 }
 
