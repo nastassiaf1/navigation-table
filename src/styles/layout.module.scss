@@ -1,0 +1,40 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 12px;
+    height: 10vh;
+
+    h1 a {
+        margin: 8px 0;
+        font-family: fantasy;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow: 0 0 black;
+    }
+
+    a {
+        color: #a45139;
+        text-shadow: initial;
+
+        &:hover {
+            text-shadow: 0 1px #b69a9a;
+        }
+    }
+}
+
+.main {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    height: 90vh;
+}
+
+.description {
+    margin-top: 150px;
+    width: 100%;
+    font-size: 50px;
+    text-align: center;
+    font-weight: 700;
+    color: #ab6d80;
+}

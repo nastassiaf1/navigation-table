@@ -7,6 +7,7 @@ const options = {
     minify: true,
     sourcemap: true,
     outdir: 'dist',
+    outfile: '',
     plugins: [sassPlugin(), cssModulesPlugin()],
 }
 
