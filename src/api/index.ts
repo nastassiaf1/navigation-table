@@ -9,16 +9,22 @@ export const tableApi = createApi({
     tagTypes: ['TableData'],
     endpoints: (builder) => ({
         getTableData: builder.query<TableData[], void>({
-        query: () => 'data',
+            query: () => 'data',
         }),
-        /*updateData: builder.mutation<TableData, { id: number, data: Partial<TableData> }>({
-        query: ({ id, data }) => ({
-            url: `data/${id}`,
-            method: 'PUT',
-            body: data,
+        getRow: builder.query<TableData, { id: number }>({
+            query: ({ id }) => ({
+                url: `data/${id}`,
+                method: 'GET',
+            }),
         }),
-        }),*/
+        updateData: builder.mutation<TableData, TableData>({
+            query: ({ id, name, age, isVerified }) => ({
+                url: `data/${id}`,
+                method: 'PUT',
+                body: { name, age, isVerified },
+            }),
+        }),
     }),
 });
 
-export const { useGetTableDataQuery } = tableApi;
+export const { useGetTableDataQuery, useGetRowQuery, useUpdateDataMutation } = tableApi;

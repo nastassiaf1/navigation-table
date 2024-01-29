@@ -1,0 +1,21 @@
+.table {
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.addbutton {
+    display: block;
+    margin-left: auto;
+    padding: 8px 12px;
+    background: initial;
+    font-size: 16px;
+    color: #a45139;
+    border: initial;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f0f8ff38;
+    }
+}

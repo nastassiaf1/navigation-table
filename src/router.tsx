@@ -4,6 +4,7 @@ import ErrorPage from "./pages/errorPage";
 import About from "./pages/about";
 import Main from "./components/main";
 import Table from "./pages/table";
+import EditPage from "./pages/editPage";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
                 {
                     path: "/table",
                     element: <Table />,
-                }
+                },
+                {
+                    path: "/table/:rowId/edit",
+                    element: <EditPage />,
+                  },
               ]
             }
         ],
