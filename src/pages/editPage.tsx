@@ -16,7 +16,7 @@ export default function EditPage() {
 
     const navigate = useNavigate();
     const { rowId } = useParams();
-    const { data, error, isLoading } = useGetRowQuery({ id: +rowId! });
+    const { data, error, isLoading } = useGetRowQuery({ id: rowId! });
     const { control, handleSubmit } = useForm();
     const [updateError, setUpdateError] = useState<string | null>(null);
 

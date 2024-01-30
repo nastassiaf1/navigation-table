@@ -5,6 +5,7 @@ import About from "./pages/about";
 import Main from "./components/main";
 import Table from "./pages/table";
 import EditPage from "./pages/editPage";
+import AddPage from "./pages/addPage";
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
                 {
                     path: "/table/:rowId/edit",
                     element: <EditPage />,
-                  },
+                },
+                {
+                    path: "/table/add",
+                    element: <AddPage />,
+                },
               ]
             }
         ],

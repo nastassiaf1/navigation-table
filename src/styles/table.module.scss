@@ -8,12 +8,12 @@
     display: block;
     margin-left: auto;
     padding: 8px 12px;
-    background: initial;
+    max-width: 34px;
     font-size: 16px;
     color: #a45139;
+    background: initial;
     border: initial;
     border-radius: 4px;
-    cursor: pointer;
 
     &:hover {
         background-color: #f0f8ff38;

@@ -24,7 +24,19 @@ export const tableApi = createApi({
                 body: { name, age, isVerified },
             }),
         }),
+        addData: builder.mutation<TableData, TableData>({
+            query: ({ id, name, age, isVerified }) => ({
+                url: `data`,
+                method: 'POST',
+                body: { id, name, age, isVerified },
+            }),
+        }),
     }),
 });
 
-export const { useGetTableDataQuery, useGetRowQuery, useUpdateDataMutation } = tableApi;
+export const {
+    useGetTableDataQuery,
+    useGetRowQuery,
+    useUpdateDataMutation,
+    useAddDataMutation,
+} = tableApi;

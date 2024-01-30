@@ -21,7 +21,7 @@ export default function Table() {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Age</th>
-                <td>Verification</td>
+                <th>Verification</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +38,8 @@ export default function Table() {
             ))}
         </tbody>
     </table>
-    <button type="button" className={styles.addbutton} aria-label="Add new user">Add</button>
+    <Link to={`/table/add`} className={styles.addbutton} aria-label="Add new user">
+        Add
+    </Link>
   </div>
 };
