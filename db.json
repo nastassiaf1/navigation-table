@@ -2,13 +2,14 @@
   "data": [
     {
       "name": "John",
-      "age": "19",
-      "isVerified": "true",
+      "age": 19,
+      "isVerified": true,
       "id": "1"
     },
     {
       "name": "Alice",
-      "age": "29",
+      "age": 29,
+      "isVerified": false,
       "id": "2"
     }
   ]

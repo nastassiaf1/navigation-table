@@ -1,5 +1,5 @@
 export interface TableData {
-    id?: number;
+    id?: string;
     name: string;
     age: number;
     isVerified: boolean;
