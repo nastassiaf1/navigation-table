@@ -13,6 +13,7 @@ import errorStyle from './../styles/error.module.scss'
 
 export default function EditPage() {
     const errorMessage = 'Failed to update data. Please try again.';
+
     const navigate = useNavigate();
     const { rowId } = useParams();
     const { data, error, isLoading } = useGetRowQuery({ id: +rowId! });
@@ -22,18 +23,16 @@ export default function EditPage() {
     const [updateData] = useUpdateDataMutation();
     const getTableDataQuery = useGetTableDataQuery();
 
-    const onSubmit: SubmitHandler<TableData> = async ({ id, name, age, isVerified }) => {
-        const updatedData = await updateData({ id: rowId, name, age, isVerified: isVerified.value });
+    const onSubmit: SubmitHandler<TableData> = async ({ name, age, isVerified }) => {
+        try {
+            await updateData({ id: rowId, name, age, isVerified });
+            await getTableDataQuery.refetch();
 
-        if (updatedData.error) {
-            setUpdateError(errorMessage);
-
+            navigate('/table');
             return;
+        } catch {
+            setUpdateError(errorMessage);
         }
-
-        await getTableDataQuery.refetch();
-
-        navigate('/table');
     }
 
     if (isLoading) {
