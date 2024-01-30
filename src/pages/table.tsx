@@ -32,12 +32,12 @@ export default function Table() {
                     <td>{item.age}</td>
                     <td>{`${item.isVerified}`}</td>
                     <td>
-                        <Link to={`/table/${item.id}/edit`}>Edit</Link>
+                        <Link to={`/table/${item.id}/edit`} aria-label={`Edit user ${item.name}, id ${item.id}`}>Edit</Link>
                     </td>
                 </tr>
             ))}
         </tbody>
     </table>
-    <button type="button" className={styles.addbutton}>Add</button>
+    <button type="button" className={styles.addbutton} aria-label="Add new user">Add</button>
   </div>
 };

@@ -17,7 +17,7 @@ export default function ErrorPage() {
                 </p>
             }
             <p>
-                <Link to="/">Go to home</Link>
+                <Link to="/" aria-label="Link to Home page">Go to home</Link>
             </p>
         </div>
     );

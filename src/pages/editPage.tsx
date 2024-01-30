@@ -52,14 +52,14 @@ export default function EditPage() {
                     control={control}
                     defaultValue={data?.name || ''}
                     rules={{ required: true, maxLength: maxLengthName, minLength: minLengthName }}
-                    render={({ field }) => <input {...field} />}
+                    render={({ field }) => <input aria-label="Input user name" {...field} />}
                 />
                 <Controller
                     name="age"
                     control={control}
                     defaultValue={data?.age || ''}
                     rules={{ required: true, min: 17, max: 99 }}
-                    render={({ field }) => <input type="number" {...field} />}
+                    render={({ field }) => <input type="number" aria-label="Input user age" {...field} />}
                 />
                 <Controller
                     name="isVerified"
@@ -70,6 +70,7 @@ export default function EditPage() {
                             <input
                                 type="checkbox"
                                 id="isVerified"
+                                aria-label={field.value ? 'Verified' : 'Not verified'}
                                 {...field}
                                 checked={field.value}
                             />
@@ -77,12 +78,13 @@ export default function EditPage() {
                         </div>
                     )}
                 />
-                <button type="submit">Save</button>
+                <button type="submit" aria-label="Save Data">Save</button>
                 <button
                     type="button"
                     onClick={() => {
                         navigate(-1);
                     }}
+                    aria-label="To previous page"
                 >
                     Cancel
                 </button>
