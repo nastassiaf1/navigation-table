@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { v4 as uuidv4 } from 'uuid';
 
-import { useGetTableDataQuery, useAddDataMutation } from "../api";
+import { useAddDataMutation } from "../api";
 
 import Spinner from "../components/spinner";
 import { TableData } from "../interfaces/tableData";
@@ -18,8 +18,6 @@ export default function AddPage() {
     const navigate = useNavigate();
     const { control, handleSubmit } = useForm();
     const [addError, setAddError] = useState<string | null>(null);
-
-    const getTableDataQuery = useGetTableDataQuery();
     const [addData, { isLoading }] = useAddDataMutation();
 
     const onSubmit: SubmitHandler<TableData> = async ({ id, name, age, isVerified }) => {
@@ -29,7 +27,6 @@ export default function AddPage() {
             const newUser = await addData({ id, name, age, isVerified })
 
             if (newUser.error) throw new Error(newUser.error);
-            await getTableDataQuery.refetch();
 
             navigate('/table');
             return;

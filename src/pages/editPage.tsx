@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 
-import { useGetRowQuery, useGetTableDataQuery, useUpdateDataMutation } from "../api";
+import { useGetRowQuery, useUpdateDataMutation } from "../api";
 
 import Spinner from "../components/spinner";
 import { TableData } from "../interfaces/tableData";
@@ -21,12 +21,10 @@ export default function EditPage() {
     const [updateError, setUpdateError] = useState<string | null>(null);
 
     const [updateData] = useUpdateDataMutation();
-    const getTableDataQuery = useGetTableDataQuery();
 
     const onSubmit: SubmitHandler<TableData> = async ({ name, age, isVerified }) => {
         try {
             await updateData({ id: rowId, name, age, isVerified });
-            await getTableDataQuery.refetch();
 
             navigate('/table');
             return;

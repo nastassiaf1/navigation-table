@@ -23,6 +23,23 @@ export const tableApi = createApi({
                 method: 'PUT',
                 body: { name, age, isVerified },
             }),
+            async onQueryStarted(_data, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(
+                        tableApi.util.updateQueryData('getTableData', undefined, (draft) => {
+                            const index = draft.findIndex(n => n.id === data.id);
+
+                            if (index !== -1) {
+                                draft[index] = data;
+                            }
+                        })
+                    )
+                } catch(error) {
+                    throw new Error(error.message);
+                }
+            },
         }),
         addData: builder.mutation<TableData, TableData>({
             query: ({ id, name, age, isVerified }) => ({
@@ -30,12 +47,42 @@ export const tableApi = createApi({
                 method: 'POST',
                 body: { id, name, age, isVerified },
             }),
+            async onQueryStarted(_data, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(
+                        tableApi.util.updateQueryData('getTableData', undefined, (draft) => {
+                            draft.push(data)
+                        })
+                    )
+                } catch(error) {
+                    throw new Error(error.message);
+                }
+            },
         }),
-        removeData: builder.mutation<string>({
+        removeData: builder.mutation<TableData, string>({
             query: (id) => ({
                 url: `data/${id}`,
                 method: 'DELETE',
             }),
+            async onQueryStarted(_id, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(
+                        tableApi.util.updateQueryData('getTableData', undefined, (draft) => {
+                            const index = draft.findIndex(n => n.id === data.id);
+
+                            if (index !== -1) {
+                                draft.splice(index, 1);
+                            }
+                        })
+                    )
+                } catch(error) {
+                    throw new Error(error.message);
+                }
+            },
         }),
     }),
 });

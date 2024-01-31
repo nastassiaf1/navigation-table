@@ -18,7 +18,6 @@ export default function Table() {
 
   async function onDeleteUser(id: string) {
     await removeData(id);
-    await getTableDataQuery.refetch();
   }
 
   return <div>
