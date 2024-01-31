@@ -31,6 +31,12 @@ export const tableApi = createApi({
                 body: { id, name, age, isVerified },
             }),
         }),
+        removeData: builder.mutation<string>({
+            query: (id) => ({
+                url: `data/${id}`,
+                method: 'DELETE',
+            }),
+        }),
     }),
 });
 
@@ -39,4 +45,5 @@ export const {
     useGetRowQuery,
     useUpdateDataMutation,
     useAddDataMutation,
+    useRemoveDataMutation
 } = tableApi;

@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useGetTableDataQuery } from './../api';
+import { useGetTableDataQuery, useRemoveDataMutation } from './../api';
 
 import styles from './../styles/table.module.scss';
 
 export default function Table() {
-  const { data, error, isLoading } = useGetTableDataQuery();
+  const getTableDataQuery = useGetTableDataQuery();
+  const [removeData] = useRemoveDataMutation();
+  const { data, isLoading, error } = getTableDataQuery;
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -12,6 +14,11 @@ export default function Table() {
 
   if (error) {
     return <div>Error loading data: {error.message}</div>;
+  }
+
+  async function onDeleteUser(id: string) {
+    await removeData(id);
+    await getTableDataQuery.refetch();
   }
 
   return <div>
@@ -33,6 +40,7 @@ export default function Table() {
                     <td>{`${item.isVerified}`}</td>
                     <td>
                         <Link to={`/table/${item.id}/edit`} aria-label={`Edit user ${item.name}, id ${item.id}`}>Edit</Link>
+                        <button className="" aria-label={`Remove user ${item.name}, id ${item.id}`} onClick={() => onDeleteUser(item.id!)}>Delete</button>
                     </td>
                 </tr>
             ))}
