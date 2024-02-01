@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TableData } from '../interfaces/tableData';
 import { environment } from '../env/env';
+import { createSelector } from '@reduxjs/toolkit';
 
 export const tableApi = createApi({
     baseQuery: fetchBaseQuery({
@@ -10,12 +11,7 @@ export const tableApi = createApi({
     endpoints: (builder) => ({
         getTableData: builder.query<TableData[], void>({
             query: () => 'data',
-        }),
-        getRow: builder.query<TableData, { id: number }>({
-            query: ({ id }) => ({
-                url: `data/${id}`,
-                method: 'GET',
-            }),
+            providesTags: result => result ? [{ type: 'TableData', id: 'LIST' }] : [],
         }),
         updateData: builder.mutation<TableData, TableData>({
             query: ({ id, name, age, isVerified }) => ({
@@ -86,6 +82,14 @@ export const tableApi = createApi({
         }),
     }),
 });
+
+export const selectUserById = createSelector(
+    [state => state, (_, params) => params],
+    (state, userId) => {
+        const users = tableApi.endpoints.getTableData.select()(state)?.data;
+        return users ? users.find(({ id }) => id === userId ) : null;
+    }
+)
 
 export const {
     useGetTableDataQuery,
