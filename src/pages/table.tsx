@@ -39,13 +39,13 @@ export default function Table() {
                     <td>{`${item.isVerified}`}</td>
                     <td>
                         <Link to={`/table/${item.id}/edit`} aria-label={`Edit user ${item.name}, id ${item.id}`}>Edit</Link>
-                        <button className="" aria-label={`Remove user ${item.name}, id ${item.id}`} onClick={() => onDeleteUser(item.id!)}>Delete</button>
+                        <button className={`${styles.button} ${styles.itembutton}`} aria-label={`Remove user ${item.name}, id ${item.id}`} onClick={() => onDeleteUser(item.id!)}>Delete</button>
                     </td>
                 </tr>
             ))}
         </tbody>
     </table>
-    <Link to={`/table/add`} className={styles.addbutton} aria-label="Add new user">
+    <Link to={`/table/add`} className={styles.button} aria-label="Add new user">
         Add
     </Link>
   </div>

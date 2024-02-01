@@ -2,13 +2,20 @@
     padding: 8px;
     background-color: white;
     border-radius: 4px;
+    border-collapse: collapse;
+
+    th,
+    td {
+        padding: 8px 18px;
+        border: 1px solid #ffc0e1;
+    }
 }
 
-.addbutton {
+.button {
     display: block;
     margin-left: auto;
     padding: 8px 12px;
-    max-width: 34px;
+    width: 34px;
     font-size: 16px;
     color: #a45139;
     background: initial;
@@ -17,5 +24,16 @@
 
     &:hover {
         background-color: #f0f8ff38;
+    }
+}
+
+.itembutton {
+    display: inline-block;
+    width: 70px;
+    color: #E27D60;
+    cursor: pointer;
+
+    &:hover {
+        text-shadow: 1px 1px rgb(165, 40, 40);
     }
 }

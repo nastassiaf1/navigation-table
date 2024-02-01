@@ -68,10 +68,10 @@ export default function EditPage() {
             <button type="submit" aria-label="Save Data">Save</button>
             <button
                 type="button"
+                aria-label="To previous page"
                 onClick={() => {
                     navigate(-1);
                 }}
-                aria-label="To previous page"
             >
                 Cancel
             </button>

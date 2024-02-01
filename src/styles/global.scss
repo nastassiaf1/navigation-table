@@ -18,10 +18,10 @@ a {
     text-shadow: 0 0 black;
 
     &:hover {
-        text-shadow: 1px 1px black;
+        text-shadow: 1px 1px rgb(165, 40, 40);
     }
 
     &.active {
-        text-decoration: underline;;
+        text-decoration: underline;
     }
 }
