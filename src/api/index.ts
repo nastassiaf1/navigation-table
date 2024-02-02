@@ -11,7 +11,6 @@ export const tableApi = createApi({
     endpoints: (builder) => ({
         getTableData: builder.query<TableData[], void>({
             query: () => 'data',
-            providesTags: result => result ? [{ type: 'TableData', id: 'LIST' }] : [],
         }),
         updateData: builder.mutation<TableData, TableData>({
             query: ({ id, name, age, isVerified }) => ({
@@ -33,7 +32,7 @@ export const tableApi = createApi({
                         })
                     )
                 } catch(error) {
-                    throw new Error(error.message);
+                    throw new Error((error as Error).message);
                 }
             },
         }),
@@ -53,7 +52,7 @@ export const tableApi = createApi({
                         })
                     )
                 } catch(error) {
-                    throw new Error(error.message);
+                    throw new Error((error as Error).message);
                 }
             },
         }),
@@ -76,7 +75,7 @@ export const tableApi = createApi({
                         })
                     )
                 } catch(error) {
-                    throw new Error(error.message);
+                    throw new Error((error as Error).message);
                 }
             },
         }),
@@ -93,7 +92,6 @@ export const selectUserById = createSelector(
 
 export const {
     useGetTableDataQuery,
-    useGetRowQuery,
     useUpdateDataMutation,
     useAddDataMutation,
     useRemoveDataMutation
