@@ -11,8 +11,26 @@
       "declaration": true,
       "noEmit": true,
       "strictNullChecks": true,
-      "strictFunctionTypes": true
+      "strictFunctionTypes": true,
+      "lib": ["dom", "dom.iterable", "esnext"],
+      "types": ["jest", "node"],
+      "baseUrl": "./",
+      "paths": {
+        "*": ["src/*"]
+      },
+      "plugins": [
+        {
+          "name": "typescript-plugin-css-modules",
+          "options": {
+            "cssModules": true,
+            "auto": true,
+            "modules": {
+              "localIdentName": "[name]__[local]--[hash:base64:5]"
+            }
+          }
+        }
+      ]
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "src/routes"],
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/routes", "src/styles", "declaration.d.ts"],
     "exclude": ["node_modules"]
 }
