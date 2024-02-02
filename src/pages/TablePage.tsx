@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useGetTableDataQuery, useRemoveDataMutation } from './../api';
+import { useGetTableDataQuery, useRemoveDataMutation } from '../api';
 
 import styles from './../styles/table.module.scss';
 
-export default function Table() {
+export default function TablePage() {
   const getTableDataQuery = useGetTableDataQuery();
   const [removeData] = useRemoveDataMutation();
   const { data, isLoading, error } = getTableDataQuery;
@@ -13,7 +13,7 @@ export default function Table() {
   }
 
   if (error) {
-    return <div>Error loading data: {error.message}</div>;
+    return <div>Error loading data: {(error as Error).message}</div>;
   }
 
   async function onDeleteUser(id: string) {
