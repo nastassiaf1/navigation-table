@@ -1,37 +1,35 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { render, screen } from '@testing-library/react';
+import mockData from './../mocks/data';
+import TablePage from 'pages/TablePage';
 
-import TablePage from './../pages/TablePage';
-import { tableApi } from '../api';
-import { server } from 'mocks/server';
+const mockedGetTableDataQuery = jest.fn();
+const mockedRemoveDataMutation = jest.fn();
+jest.mock('./../api', () => ({
+    useGetTableDataQuery: () => mockedGetTableDataQuery(),
+    useRemoveDataMutation: () => mockedRemoveDataMutation(),
+}));
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-
-test('renders Table page with data', async () => {
-  const store = configureStore({
-    reducer: {
-      [tableApi.reducerPath]: tableApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(tableApi.middleware),
+describe('TablePage', () => {
+  beforeEach(() => {
+    mockedGetTableDataQuery.mockClear();
+    mockedRemoveDataMutation.mockClear();
   });
 
-  render(
-    <Router>
-      <Provider store={store}>
-        <TablePage />
-      </Provider>
-    </Router>
-  );
+  it('should render data after API request', async () => {
+    mockedGetTableDataQuery.mockReturnValueOnce({
+      data: mockData,
+      isLoading: false,
+      isSuccess: true,
+      isError: false,
+      error: null,
+    });
 
-  await waitFor(() => screen.getByText('John'), { timeout: 4000 });
+    mockedRemoveDataMutation.mockReturnValueOnce(jest.fn());
 
-  expect(screen.getByText('John')).toBeInTheDocument();
-  expect(screen.getByText('Jane')).toBeInTheDocument();
+    render(<TablePage />);
+
+    expect(screen.queryByText('Loading...')).toBeNull();
+    expect(screen.getByText(mockData[0].name)).toBeInTheDocument();
+    expect(screen.getByText(mockData[1].name)).toBeInTheDocument();
+  });
 });
