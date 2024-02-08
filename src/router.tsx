@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import ErrorPage from "./pages/errorPage";
 import About from "./pages/about";
-import Main from "./components/main";
+import Preview from "./components/preview";
 import Table from "./pages/tablePage";
 import EditPage from "./pages/editPage";
 import AddPage from "./pages/addPage";
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
               children: [
                 {
                     path: "/",
-                    element: <Main />,
+                    element: <Preview />,
                 },
                 {
                     path: "/about",
