@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
+import Filter from 'components/filter';
 import { useGetTableDataQuery, useRemoveDataMutation } from '../api';
 
 import styles from './../styles/table.module.scss';
+import { useEffect, useState } from 'react';
+import { TableData } from 'interfaces/tableData';
 
 export default function TablePage() {
   const getTableDataQuery = useGetTableDataQuery();
   const [removeData] = useRemoveDataMutation();
-  const { data, isLoading, error } = getTableDataQuery;
+  const { data: initialData, isLoading, error } = getTableDataQuery;
+  const [data, setData] = useState<TableData[]>([])
+
+  useEffect(() => {
+    setData(initialData || [])
+  }, [initialData])
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -21,6 +29,8 @@ export default function TablePage() {
   }
 
   return <div>
+    <Filter disabled={!!data} data={data || []} setData={setData} />
+
     <table className={styles.table}>
         <thead>
             <tr>

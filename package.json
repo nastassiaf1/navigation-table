@@ -31,6 +31,7 @@
     "i": "^0.3.7",
     "jest-fetch-mock": "^3.0.3",
     "json-server": "^1.0.0-alpha.22",
+    "lodash": "^4.17.21",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
