@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import mockData from 'mocks/data';
-import TablePage from 'pages/TablePage';
+import TablePage from 'pages/tablePage';
 import { BrowserRouter } from 'react-router-dom';
 
 const mockedGetTableDataQuery = jest.fn().mockImplementation(() => ({
