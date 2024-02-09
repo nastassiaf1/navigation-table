@@ -7,10 +7,10 @@ import { useEffect, useState } from 'react';
 import { TableData } from 'interfaces/tableData';
 
 export default function TablePage() {
-  const getTableDataQuery = useGetTableDataQuery();
   const [removeData] = useRemoveDataMutation();
-  const { data: initialData, isLoading, error } = getTableDataQuery;
   const [data, setData] = useState<TableData[]>([])
+  const getTableDataQuery = useGetTableDataQuery();
+  const { data: initialData, isLoading, error } = getTableDataQuery;
 
   useEffect(() => {
     setData(initialData || [])
@@ -29,7 +29,7 @@ export default function TablePage() {
   }
 
   return <div>
-    <Filter disabled={!!data} data={data || []} setData={setData} />
+    <Filter disabled={!!data} setData={setData} data={initialData}/>
 
     <table className={styles.table}>
         <thead>

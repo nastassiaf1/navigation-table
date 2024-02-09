@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { isEqual, isUndefined } from "lodash";
+import { isUndefined, isEqual } from "lodash";
 
 import { TableData } from "interfaces/tableData";
 import { maxAge, minAge } from "constants/userTable.const";
 
-export default function Filter({ data, disabled, setData }: { data: TableData[], disabled: boolean, setData: (data: TableData[]) => void }) {
+export default function Filter({ setData, data }: { disabled?: boolean, data: TableData[], setData: (data: TableData[]) => void }) {
     const { control, watch } = useForm();
+    const [filteredData, setFilteredData] = useState<TableData[]>([]);
 
     const watchAllFields = watch();
 
@@ -18,14 +19,15 @@ export default function Filter({ data, disabled, setData }: { data: TableData[],
             watchAllFields.isVerified)
         ) return;
 
-        const _data = filterData(data);
+        const _filteredData = filterData();
 
-        if (isEqual(_data, data)) return;
+        if (isEqual(filteredData, _filteredData)) return;
 
-        setData(_data);
+        setFilteredData(_filteredData);
+        setData(_filteredData);
     }, [watchAllFields]);
 
-    const filterData = (data: TableData[]) => {
+    const filterData = () => {
         return data.filter((item) => {
           const { minAge, maxAge, isVerified, name, id } = watchAllFields;
           return (
