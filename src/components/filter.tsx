@@ -4,6 +4,8 @@ import { TableData } from "interfaces/tableData";
 import { maxAge, minAge } from "constants/userTable.const";
 import { FilterField, FilterParam } from "interfaces/filter";
 
+import styles from './../styles/filter.module.scss';
+
 export default function Filter({ setData, data }: { disabled?: boolean, data: TableData[], setData: (data: TableData[]) => void }) {
     const initialFilterParam = {
         name: '',
@@ -56,7 +58,7 @@ export default function Filter({ setData, data }: { disabled?: boolean, data: Ta
     };
 
     return (
-        <form>
+        <form className={ styles.filter }>
             <input
                 name={ FilterField.NAME }
                 placeholder="Name"

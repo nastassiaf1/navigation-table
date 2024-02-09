@@ -1,16 +1,17 @@
 .table {
     display: inline-block;
-    padding: 8px;
-    max-height: 540px;
+    margin-top: 12px;
+    padding: 0 8px 8px 8px;
+    height: 540px;
     overflow: scroll;
     border-radius: 4px;
     border-collapse: collapse;
 
     thead {
         position: sticky;
-        top: -9px;
+        top: 0;
         height: 45px;
-        background-color: #06bf8e38;
+        background-color: #7abfad;
     }
 
     tbody {
@@ -20,7 +21,6 @@
     th,
     td {
         padding: 8px 18px;
-        border: 1px solid #ffc0e1;
     }
 
     tr td:last-child {

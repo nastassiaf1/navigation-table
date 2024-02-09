@@ -38,6 +38,7 @@ export default function TablePage() {
                 <th>Name</th>
                 <th>Age</th>
                 <th>Verification</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
