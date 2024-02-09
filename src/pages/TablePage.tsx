@@ -29,7 +29,7 @@ export default function TablePage() {
   }
 
   return <div>
-    <Filter disabled={!!data} setData={setData} data={initialData}/>
+    <Filter disabled={!!data} setData={setData} data={initialData || []}/>
 
     <table className={styles.table}>
         <thead>
