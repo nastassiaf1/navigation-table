@@ -1,22 +1,23 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
-import { useAddDataMutation } from "../api";
+import { useAddDataMutation } from '../api';
 
-import Spinner from "../components/spinner";
-import { TableData } from "../interfaces/tableData";
-import { maxLengthName, minLengthName } from "../constants/userTable.const";
+import Spinner from '../components/spinner';
+import { TableData } from '../interfaces/tableData';
+import { maxLengthName, minLengthName } from '../constants/userTable.const';
 
-import errorStyle from './../styles/error.module.scss'
+import errorStyle from './../styles/error.module.scss';
+import formStyle from './../styles/form.module.scss';
 
 
 export default function AddPage() {
     const errorMessage = 'Failed to add data. Please try again.';
 
     const navigate = useNavigate();
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit, formState: { errors } } = useForm();
     const [addError, setAddError] = useState<string | null>(null);
     const [addData, { isLoading }] = useAddDataMutation();
 
@@ -40,27 +41,47 @@ export default function AddPage() {
     }
 
       return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={ formStyle.form } onSubmit={ handleSubmit(onSubmit) }>
             <Controller
                 name="name"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, maxLength: maxLengthName, minLength: minLengthName }}
-                render={({ field }) => <input aria-label="Input user name" {...field} />}
+                rules={{
+                    required: 'Name is required',
+                    maxLength: {
+                        value: maxLengthName,
+                        message: 'Name is too long'
+                    },
+                    minLength: {
+                        value: minLengthName,
+                        message: 'Name is too short'
+                    }
+                }}
+                render={({ field }) => (
+                    <div className={ formStyle.formitem }>
+                        <input placeholder="Enter name" aria-label="Input user name" {...field} />
+                        {errors.name && <span className={`${errorStyle.error} ${formStyle.error}`}>{errors.name.message}</span>}
+                    </div>
+                )}
             />
             <Controller
                 name="age"
                 control={control}
                 defaultValue=""
-                rules={{ required: true, min: 17, max: 99 }}
-                render={({ field }) => <input type="number" aria-label="Input user age" {...field} />}
+                rules={{ required: 'Age is required', min: { value: 17, message: 'Minimum age is 17' }, max: { value: 99, message: 'Maximum age is 99' } }}
+                render={({ field }) => (
+                    <div className={ formStyle.formitem }>
+                        <input placeholder="Enter age" type="number" aria-label="Input user age" {...field} />
+                        {errors.age && <span className={`${errorStyle.error} ${formStyle.error}`}>{errors.age.message}</span>}
+                    </div>
+                )}
             />
             <Controller
                 name="isVerified"
                 control={control}
                 defaultValue={false}
                 render={({ field }) => (
-                    <div>
+                    <div className={ formStyle.formitem }>
                         <input
                             type="checkbox"
                             id="isVerified"
@@ -72,9 +93,17 @@ export default function AddPage() {
                     </div>
                 )}
             />
-            <button type="submit" aria-label="Add user">Save</button>
+            <button
+                type="submit"
+                className={formStyle.savebutton}
+                disabled={Object.keys(errors).length > 0}
+                aria-label="Add user"
+            >
+                Save
+            </button>
             <button
                 type="button"
+                className={formStyle.cancelbutton}
                 onClick={() => {
                     navigate(-1);
                 }}

@@ -1,0 +1,43 @@
+.form {
+    width: 400px;
+    text-align: center;
+
+    input {
+        margin-bottom: 12px;
+        padding: 8px 12px;
+        border: initial;
+        border-radius: 4px;
+    }
+
+    button {
+        margin: 0 12px;
+        width: 80px;
+        height: 24px;
+        border: 0px;
+        border-radius: 4px;
+    }
+}
+
+.formitem {
+    position: relative;
+}
+
+.error {
+    position: absolute;
+    padding: 8px 12px;
+    text-wrap: nowrap;
+}
+
+.savebutton {
+    color: #fff;
+    background-color: #7abfad;
+
+   &[disabled] {
+        opacity: 0.5;
+   }
+}
+
+.cancelbutton {
+    color: #E27D60;
+    background-color: #fff;
+}
