@@ -104,10 +104,10 @@ export default function AddPage() {
             <button
                 type="button"
                 className={formStyle.cancelbutton}
+                aria-label="To previous page"
                 onClick={() => {
                     navigate(-1);
                 }}
-                aria-label="To previous page"
             >
                 Cancel
             </button>

@@ -9,6 +9,7 @@ import { TableData } from "../interfaces/tableData";
 import { maxLengthName, minLengthName } from "../constants/userTable.const";
 
 import errorStyle from "./../styles/error.module.scss";
+import formStyle from './../styles/form.module.scss';
 
 export default function EditPage() {
     const errorMessage = 'Failed to update data. Please try again.';
@@ -16,7 +17,7 @@ export default function EditPage() {
     const navigate = useNavigate();
     const { rowId } = useParams();
     const user = useSelector(state => selectUserById(state, rowId));
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit, formState: { errors } } = useForm();
     const [updateError, setUpdateError] = useState<string | null>(null);
     const [updateData] = useUpdateDataMutation();
 
@@ -33,20 +34,38 @@ export default function EditPage() {
 
     return (
         user ?
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={ formStyle.form } onSubmit={handleSubmit(onSubmit)}>
             <Controller
                 name="name"
                 control={control}
                 defaultValue={user.name || ''}
-                rules={{ required: true, maxLength: maxLengthName, minLength: minLengthName }}
-                render={({ field }) => <input aria-label="Input user name" {...field} />}
+                rules={{
+                    required: 'Name is required',
+                    maxLength: { value: maxLengthName, message: 'Name is too long' },
+                    minLength: { value: minLengthName, message: 'Name is too short' }
+                }}
+                render={({ field }) => (
+                    <div>
+                        <input aria-label="Input user name" {...field} />
+                        {errors.name && <span className={`${errorStyle.error} ${formStyle.error}`}>{errors.name.message}</span>}
+                    </div>
+                )}
             />
             <Controller
                 name="age"
                 control={control}
                 defaultValue={user.age || ''}
-                rules={{ required: true, min: 17, max: 99 }}
-                render={({ field }) => <input type="number" aria-label="Input user age" {...field} />}
+                rules={{
+                    required: 'Age is required',
+                    min: { value: 17, message: 'Minimum age is 17' },
+                    max: { value: 99, message: 'Maximum age is 99' }
+                }}
+                render={({ field }) => (
+                    <div>
+                        <input type="number" aria-label="Input user age" {...field} />
+                        {errors.age && <span className={`${errorStyle.error} ${formStyle.error}`}>{errors.age.message}</span>}
+                    </div>
+                )}
             />
             <Controller
                 name="isVerified"
@@ -65,9 +84,16 @@ export default function EditPage() {
                     </div>
                 )}
             />
-            <button type="submit" aria-label="Save Data">Save</button>
+            <button
+                type="submit"
+                className={formStyle.savebutton}
+                aria-label="Save Data"
+            >
+                Save
+            </button>
             <button
                 type="button"
+                className={formStyle.cancelbutton}
                 aria-label="To previous page"
                 onClick={() => {
                     navigate(-1);
