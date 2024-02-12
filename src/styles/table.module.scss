@@ -1,9 +1,17 @@
+.tablewrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 540px;
+}
+
 .table {
     display: inline-block;
     margin-top: 12px;
     padding: 0 8px 8px 8px;
+    width: 100%;
     height: 540px;
-    overflow: scroll;
+    overflow-y: auto;
     border-radius: 4px;
     border-collapse: collapse;
 
@@ -26,6 +34,12 @@
     tr td:last-child {
         background-color: #06bf8e38;
     }
+}
+
+.description {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .button {
