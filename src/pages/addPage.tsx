@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
+import { useForm, Controller, SubmitHandler, FieldValues } from 'react-hook-form';
+import uuidv4 from 'utils/uuid';
 
 import { useAddDataMutation } from '../api';
 
 import Spinner from '../components/spinner';
-import { TableData } from '../interfaces/tableData';
 import { maxLengthName, minLengthName } from '../constants/userTable.const';
 
 import errorStyle from './../styles/error.module.scss';
@@ -21,13 +20,13 @@ export default function AddPage() {
     const [addError, setAddError] = useState<string | null>(null);
     const [addData, { isLoading }] = useAddDataMutation();
 
-    const onSubmit: SubmitHandler<TableData> = async ({ id, name, age, isVerified }) => {
+    const onSubmit: SubmitHandler<FieldValues> = async ({ name, age, isVerified }) => {
         try {
             // generated on the client side, since we are using a mock server
             const id = uuidv4();
             const newUser = await addData({ id, name, age, isVerified })
 
-            if (newUser.error) throw new Error(newUser.error);
+            if (!newUser) throw new Error(errorMessage);
 
             navigate('/table');
             return;
@@ -60,7 +59,7 @@ export default function AddPage() {
                 render={({ field }) => (
                     <div className={ formStyle.formitem }>
                         <input placeholder="Enter name" aria-label="Input user name" {...field} />
-                        {errors.name && <span className={`${errorStyle.error} ${formStyle.error}`}>{errors.name.message}</span>}
+                        {errors && errors.name && <span className={`${errorStyle.error} ${formStyle.error}`}>{String(errors.name.message)}</span>}
                     </div>
                 )}
             />
@@ -72,7 +71,7 @@ export default function AddPage() {
                 render={({ field }) => (
                     <div className={ formStyle.formitem }>
                         <input placeholder="Enter age" type="number" aria-label="Input user age" {...field} />
-                        {errors.age && <span className={`${errorStyle.error} ${formStyle.error}`}>{errors.age.message}</span>}
+                        {errors && errors.age && <span className={`${errorStyle.error} ${formStyle.error}`}>{String(errors.age.message)}</span>}
                     </div>
                 )}
             />
