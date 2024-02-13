@@ -1,48 +1,35 @@
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { TableData } from "interfaces/tableData";
 import { maxAge, minAge } from "constants/userTable.const";
 import { FilterField, FilterParam } from "interfaces/filter";
-
 import styles from './../styles/filter.module.scss';
 
 export default function Filter({ setData, data }: { disabled?: boolean, data: TableData[], setData: (data: TableData[]) => void }) {
-    const initialFilterParam = {
-        name: '',
-        id: '',
-        minAge: String(minAge),
-        maxAge: String(maxAge),
-        isVerified: undefined,
-    }
-    const [filters, setFilters] = useState<Partial<FilterParam>>(initialFilterParam);
+    const { register, watch, reset, setValue } = useForm<FilterParam>({
+        defaultValues: {
+            name: '',
+            id: '',
+            minAge: String(minAge),
+            maxAge: String(maxAge),
+            isVerified: undefined,
+        }
+    });
+
+    const filters = watch();
 
     useEffect(() => {
         setData(filterData());
-    }, [filters]);
+    }, [JSON.stringify(filters)]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let { name, value, type, checked } = e.target;
+    useEffect(() => {
+        const { minAge: _minAge, maxAge: _maxAge } = filters;
 
-        if (name === FilterField.MIN_AGE) {
-            if (+value < minAge) value = String(minAge);
-            if (+value >= +filters.maxAge!) value = String(filters.maxAge);
-        }
-
-        if (name === FilterField.MAX_AGE) {
-            if (+value > maxAge) value = String(maxAge);
-            if (+value <= +filters.minAge!) value = String(filters.minAge);
-        }
-
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            [name]: type === 'checkbox' ? checked : value
-        }));
-    };
-
-    const resetFilter = () => {
-        setFilters(initialFilterParam);
-        setData(data);
-    };
+        if (+_minAge < +minAge) setValue(FilterField.MIN_AGE, String(minAge));
+        if (+_maxAge > +maxAge) setValue(FilterField.MAX_AGE, String(maxAge));
+        if (+_minAge >= +_maxAge) setValue(FilterField.MIN_AGE, String(_maxAge));
+        if (+_maxAge <= +_minAge) setValue(FilterField.MAX_AGE, String(_minAge));
+    }, [filters.minAge, filters.maxAge, setValue]);
 
     const filterData = () => {
         return data.filter((item) => {
@@ -51,52 +38,47 @@ export default function Filter({ setData, data }: { disabled?: boolean, data: Ta
                 (minAge === '' || +item.age >= +minAge!) &&
                 (maxAge === '' || +item.age <= +maxAge!) &&
                 (!isVerified || item.isVerified === isVerified) &&
-                (name === '' || item.name.toLowerCase().includes(name!.toLowerCase())) &&
-                (id === '' || item.id!.toLowerCase().startsWith(id!.toLowerCase()))
+                (name === '' || item.name.toLowerCase().includes(name.toLowerCase())) &&
+                (id === '' || item.id!.toLowerCase().startsWith(id.toLowerCase()))
             );
         });
     };
 
+    const resetFilter = () => {
+        reset();
+        setData(data);
+    };
+
     return (
-        <form className={ styles.filter }>
+        <form className={styles.filter}>
             <input
-                name={ FilterField.NAME }
+                {...register(FilterField.NAME)}
                 placeholder="Name"
                 aria-label="Search by name"
-                value={filters.name}
-                onChange={handleInputChange}
             />
             <input
-                name={ FilterField.ID }
+                {...register(FilterField.ID)}
                 placeholder="ID"
                 aria-label="Search by ID"
-                value={filters.id}
-                onChange={handleInputChange}
             />
             <input
-                name={ FilterField.MIN_AGE }
+                {...register(FilterField.MIN_AGE)}
                 type="number"
                 placeholder="Min Age"
                 aria-label="Min age"
-                value={filters.minAge}
-                onChange={handleInputChange}
             />
             <input
-                name={ FilterField.MAX_AGE }
+                {...register(FilterField.MAX_AGE)}
                 type="number"
                 placeholder="Max Age"
                 aria-label="Max age"
-                value={filters.maxAge}
-                onChange={handleInputChange}
             />
             <div>
                 <input
-                    name={ FilterField.IS_VERIFIED }
+                    {...register(FilterField.IS_VERIFIED)}
                     type="checkbox"
                     id="isVerified"
                     aria-label="Verified"
-                    checked={filters.isVerified}
-                    onChange={handleInputChange}
                 />
                 <label htmlFor="isVerified">Verified</label>
             </div>
