@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Filter from 'components/filter';
-import { useGetTableDataQuery, useRemoveDataMutation } from '../api';
+import { useGetTableDataQuery, useRemoveDataMutation } from '../api/table.service.';
 
 import styles from './../styles/table.module.scss';
 import { useEffect, useState } from 'react';

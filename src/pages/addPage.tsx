@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler, FieldValues } from 'react-hook-form';
 import uuidv4 from 'utils/uuid';
 
-import { useAddDataMutation } from '../api';
+import { useAddDataMutation } from '../api/table.service.';
 
 import Spinner from '../components/spinner';
 import { maxLengthName, minLengthName } from '../constants/userTable.const';

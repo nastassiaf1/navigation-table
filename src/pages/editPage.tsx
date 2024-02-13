@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { useSelector } from "react-redux";
 
-import { useUpdateDataMutation, selectUserById } from "../api";
+import { useUpdateDataMutation, selectUserById } from "../api/table.service.";
 
 import { TableData } from "../interfaces/tableData";
 import { maxLengthName, minLengthName } from "../constants/userTable.const";

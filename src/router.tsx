@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import App from "./App";
 import ErrorPage from "./pages/errorPage";
 import About from "./pages/about";
@@ -36,6 +36,8 @@ const router = createBrowserRouter([
                     path: "/table/add",
                     element: <AddPage />,
                 },
+                { path: "login", element: <Outlet /> },
+                { path: "registration", element: <Outlet /> },
               ]
             }
         ],

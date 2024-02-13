@@ -8,7 +8,7 @@ import mockData from 'mocks/data';
 const mockedUseAddDataMutation = jest.fn().mockImplementation(() => ([jest.fn(), { isLoading: false }]));
 const mockNavigateFn = jest.fn().mockImplementation(() => jest.fn());
 
-jest.mock('api', () => ({
+jest.mock('./../../api/table.service..ts', () => ({
     useAddDataMutation: () => mockedUseAddDataMutation(),
 }));
 jest.mock('react-router-dom', () => ({

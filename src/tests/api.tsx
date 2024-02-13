@@ -1,15 +1,15 @@
 import { renderHook, waitFor, act } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import mockData from 'mocks/data';
 import {
     useGetTableDataQuery,
     useUpdateDataMutation,
     useAddDataMutation,
     useRemoveDataMutation,
-} from 'api';
+} from 'api/table.service.';
 import store from 'store/store';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { TableData } from 'interfaces/tableData';
 
 fetchMock.enableMocks();

@@ -1,36 +1,33 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
-import navStyle from './styles/navigation.module.scss';
-import layoutStyle from './styles/layout.module.scss';
+import { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import Navigation from 'components/navigation';
+import AuthModal from 'components/authModal';
 
+import layoutStyle from './styles/layout.module.scss';
 import './styles/global.scss';
 
 export default function App() {
+    const location = useLocation();
+    const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (location.pathname === '/login' || location.pathname === '/registration') {
+            setAuthModalOpen(true);
+        } else {
+            setAuthModalOpen(false);
+        }
+    }, [location]);
+
     return <>
         <header className={layoutStyle.header}>
             <h1>
                 <Link to="/">Table</Link>
             </h1>
-            <nav className={navStyle.navigation}>
-                <NavLink
-                    to="/table"
-                    className={({ isActive, isPending }) =>
-                        isPending ? "pending" : isActive ? "active" : ""
-                    }
-                >
-                    Table
-                </NavLink>
-                <NavLink
-                    to="/about"
-                    className={({ isActive, isPending }) =>
-                        isPending ? "pending" : isActive ? "active" : ""
-                    }
-                >
-                    About us
-                </NavLink>
-            </nav>
+            <Navigation></Navigation>
         </header>
         <main className={layoutStyle.main}>
             <Outlet />
+            {isAuthModalOpen && <AuthModal />}
         </main>
     </>
 }

@@ -14,7 +14,7 @@ const mockedRemoveDataMutation = jest.fn().mockImplementation(() => [
     jest.fn().mockImplementation(() => (mockData[0]))
 ]);
 
-jest.mock('api', () => ({
+jest.mock('./../../api/table.service..ts', () => ({
     useGetTableDataQuery: () => mockedGetTableDataQuery(),
     useRemoveDataMutation: () => mockedRemoveDataMutation(),
 }));
