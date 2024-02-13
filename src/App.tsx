@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import Navigation from 'components/navigation';
-import AuthModal from 'components/authModal';
+import AuthModal from 'components/user/authModal';
 
 import layoutStyle from './styles/layout.module.scss';
 import './styles/global.scss';

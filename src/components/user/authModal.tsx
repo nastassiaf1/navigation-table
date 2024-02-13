@@ -1,8 +1,9 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
+import LoginForm from './loginForm';
+import RegistrationForm from './registrationForm';
 
 export default function AuthModal() {
     const navigate = useNavigate();
@@ -28,11 +29,11 @@ export default function AuthModal() {
                     </TabList>
                 </Box>
                 <TabPanel value="0">
-                    Login Form
+                    <LoginForm />
                 </TabPanel>
                 <TabPanel value="1">
-                    Registration Form
-            </TabPanel>
+                    <RegistrationForm />
+                </TabPanel>
             <button onClick={handleClose}>Close</button>
         </TabContext>
     );
