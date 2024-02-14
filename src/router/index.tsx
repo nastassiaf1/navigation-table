@@ -1,11 +1,12 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import App from "./App";
-import ErrorPage from "./pages/errorPage";
-import About from "./pages/about";
-import Preview from "./components/preview";
-import Table from "./pages/tablePage";
-import EditPage from "./pages/editPage";
-import AddPage from "./pages/addPage";
+import App from "../App";
+import ErrorPage from "../pages/errorPage";
+import About from "../pages/about";
+import Preview from "../components/preview";
+import Table from "../pages/tablePage";
+import EditPage from "../pages/editPage";
+import AddPage from "../pages/addPage";
+import RequireAuth from "./guards/table";
 
 const router = createBrowserRouter([
     {
@@ -26,15 +27,27 @@ const router = createBrowserRouter([
                 },
                 {
                     path: "/table",
-                    element: <Table />,
+                    element: (
+                        <RequireAuth>
+                            <Table />
+                        </RequireAuth>
+                    ),
                 },
                 {
                     path: "/table/:rowId/edit",
-                    element: <EditPage />,
+                    element: (
+                        <RequireAuth>
+                            <EditPage />
+                        </RequireAuth>
+                    ),
                 },
                 {
                     path: "/table/add",
-                    element: <AddPage />,
+                    element: (
+                        <RequireAuth>
+                            <AddPage />
+                        </RequireAuth>
+                    ),
                 },
                 { path: "login", element: <Outlet /> },
                 { path: "registration", element: <Outlet /> },
