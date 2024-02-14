@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createSelector } from '@reduxjs/toolkit';
 import { TableData } from '../interfaces/tableData';
 import { environment } from '../env/env';
-import { createSelector } from '@reduxjs/toolkit';
 
 export const tableApi = createApi({
     baseQuery: fetchBaseQuery({

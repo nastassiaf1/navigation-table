@@ -3,24 +3,22 @@ import { User } from 'interfaces/user';
 import { environment } from 'env/env';
 
 export const userApi = createApi({
-  reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: environment.apiUrl }),
-  endpoints: (builder) => ({
-    loginUser: builder.mutation<User, Pick<User, 'name' | 'password'>>({
-      query: (credentials) => ({
-        url: 'user/login',
-        method: 'POST',
-        body: credentials,
-      }),
+    reducerPath: 'userApi',
+    baseQuery: fetchBaseQuery({ baseUrl: environment.apiUrl }),
+    endpoints: (builder) => ({
+        getUsers: builder.query<User[], void>({
+            query: () => 'users',
+        }),
+        registerUser: builder.mutation<User, User>({
+            query: (userInfo) => {
+                console.log(userInfo);
+                return {
+                url: 'users',
+                method: 'POST',
+                body: userInfo,
+            }},
+        }),
     }),
-    registerUser: builder.mutation<User, User>({
-      query: (userInfo) => ({
-        url: 'user/register',
-        method: 'POST',
-        body: userInfo,
-      }),
-    }),
-  }),
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation } = userApi;
+export const { useGetUsersQuery, useRegisterUserMutation } = userApi;

@@ -21,7 +21,8 @@ export default function AuthModal() {
     }
 
     return (
-        <TabContext value={currentTab}>
+        <div className="modal">
+            <TabContext value={currentTab}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="login form tabs" centered>
                         <Tab label="Login" value="0" />
@@ -34,7 +35,8 @@ export default function AuthModal() {
                 <TabPanel value="1">
                     <RegistrationForm />
                 </TabPanel>
-            <button onClick={handleClose}>Close</button>
-        </TabContext>
+                <button onClick={handleClose}>Close</button>
+            </TabContext>
+        </div>
     );
 };

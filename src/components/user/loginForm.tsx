@@ -1,33 +1,48 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useLoginUserMutation } from 'api/user.service';
+import { useGetUsersQuery } from 'api/user.service';
 import { ILoginForm } from 'interfaces/user';
 
+import formStyle from './../../styles/form.module.scss';
+import errorStyle from './../../styles/error.module.scss';
+
 export default function LoginForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>();
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+    const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>();
+    const getUsersQuery = useGetUsersQuery();
+    const { data: users, isLoading } = getUsersQuery;
+    const [userError, setUserError] = useState<string | null>(null);
 
-  const onSubmit = async (data: ILoginForm) => {
-    try {
-      await loginUser(data).unwrap();
-      console.log('Login successful');
-    } catch (error) {
-      console.error('Login failed', error);
-    }
-  };
+    const onSubmit = async (data: ILoginForm) => {
+        try {
+            if (!users?.length) throw new Error();
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input id="name" {...register('name', { required: true })} />
-        {errors.name && <span>This field is required</span>}
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" {...register('password', { required: true })} />
-        {errors.password && <span>This field is required</span>}
-      </div>
-      <button type="submit" disabled={isLoading}>Login</button>
-    </form>
-  );
+            const user = users.find((user) => {
+                return user.name === data.name;
+            });
+
+            if (!user) {
+                throw new Error()
+            };
+
+            console.log('Login success');
+            setUserError(null);
+        } catch (error) {
+            setUserError('Login failed');
+        }
+    };
+
+    return (
+        <form className={ formStyle.form } onSubmit={ handleSubmit(onSubmit) }>
+            {userError && <span className={ errorStyle.error }>{ userError }</span>}
+            <div className={ formStyle.formitem }>
+                <input id="name" placeholder="Name" {...register('name', { required: true })} />
+                { errors.name && <span className={`${errorStyle.error} ${formStyle.error}`}>This field is required</span> }
+            </div>
+            <div className={ formStyle.formitem }>
+                <input id="password" placeholder="Password" type="password" {...register('password', { required: true })} />
+                { errors.password && <span className={`${errorStyle.error} ${formStyle.error}`}>This field is required</span> }
+            </div>
+            <button type="submit" className={ formStyle.savebutton } disabled={ isLoading }>Login</button>
+        </form>
+    );
 }

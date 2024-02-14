@@ -1,5 +1,11 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterUserMutation } from 'api/user.service'; // Импортируйте хук из вашего API
+import { useRegisterUserMutation } from 'api/user.service';
+import uuidv4 from 'utils/uuid';
+import { UserRole } from 'constants/user.enum';
+
+import formStyle from './../../styles/form.module.scss';
+import errorStyle from './../../styles/error.module.scss';
 
 interface IRegistrationForm {
   name: string;
@@ -8,36 +14,34 @@ interface IRegistrationForm {
 }
 
 export default function RegistrationForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<IRegistrationForm>();
-  const [registerUser, { isLoading }] = useRegisterUserMutation();
+    const { register, handleSubmit, formState: { errors } } = useForm<IRegistrationForm>();
+    const [registerUser, { isLoading }] = useRegisterUserMutation();
+    const [userError, setUserError] = useState<string | null>(null);
 
-  const onSubmit = async (data: IRegistrationForm) => {
-    try {
-      await registerUser(data).unwrap();
-      console.log("Registration successful");
-    } catch (error) {
-      console.error("Registration failed", error);
-    }
-  };
+    const onSubmit = async (data: IRegistrationForm) => {
+        try {
+            // generated on the client side, since we are using a mock server
+            const id = uuidv4();
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input id="name" {...register('name', { required: true })} />
-        {errors.name && <span>This field is required</span>}
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" {...register('email', { required: true })} />
-        {errors.email && <span>This field is required</span>}
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" {...register('password', { required: true })} />
-        {errors.password && <span>This field is required</span>}
-      </div>
-      <button type="submit" disabled={isLoading}>Register</button>
-    </form>
-  );
+            await registerUser({ ...data, id, role: UserRole.USER }).unwrap();
+            setUserError(null);
+        } catch (error) {
+            setUserError("Registration failed");
+        }
+    };
+
+    return (
+        <form className={ formStyle.form } onSubmit={handleSubmit(onSubmit)}>
+            {userError && <span className={ errorStyle.error }>{ userError }</span>}
+            <div className={ formStyle.formitem }>
+                <input id="name" placeholder="Name" {...register('name', { required: true })} />
+                {errors.name && <span className={`${errorStyle.error} ${formStyle.error}`}>This field is required</span>}
+            </div>
+            <div className={ formStyle.formitem }>
+                <input id="password" placeholder="Password" type="password" {...register('password', { required: true })} />
+                {errors.password && <span className={`${errorStyle.error} ${formStyle.error}`}>This field is required</span>}
+            </div>
+            <button type="submit" className={ formStyle.savebutton } disabled={isLoading}>Register</button>
+        </form>
+    );
 }
