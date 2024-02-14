@@ -28,7 +28,7 @@ export default function AddPage() {
 
             if (!newUser) throw new Error(errorMessage);
 
-            navigate('/table');
+            navigate('/');
             return;
         } catch {
             setAddError(errorMessage);

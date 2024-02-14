@@ -5,3 +5,25 @@
         margin-right: 12px;
     }
 }
+
+.button {
+    font-size: 16px;
+    color: #a45139;
+    text-shadow: initial;
+    text-decoration: none;
+    background: initial;
+    border: none;
+    cursor: pointer;
+
+    &:first-child {
+        border-right: 1px solid #a45139;
+    }
+
+    &:hover {
+        text-shadow: 0 1px #b69a9a;
+    }
+
+    &.active {
+        text-decoration: underline;
+    }
+}
