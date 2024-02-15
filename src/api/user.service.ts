@@ -10,13 +10,11 @@ export const userApi = createApi({
             query: () => 'users',
         }),
         registerUser: builder.mutation<User, User>({
-            query: (userInfo) => {
-                console.log(userInfo);
-                return {
+            query: (userInfo) => ({
                 url: 'users',
                 method: 'POST',
                 body: userInfo,
-            }},
+            }),
         }),
     }),
 });

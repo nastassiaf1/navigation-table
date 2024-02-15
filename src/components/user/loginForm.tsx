@@ -29,6 +29,7 @@ export default function LoginForm() {
                 throw new Error()
             };
 
+            sessionStorage.setItem('user', JSON.stringify(user));
             dispatch(setUser(user));
             navigate('/');
         } catch (error) {

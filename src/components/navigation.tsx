@@ -15,7 +15,8 @@ export default function Navigation() {
 
     const handleOpenModal = (path: string) => {
         navigate(path, { state: { backgroundLocation: location } });
-      };
+    };
+
     return (
         <nav className={navStyle.navigation}>
             {
