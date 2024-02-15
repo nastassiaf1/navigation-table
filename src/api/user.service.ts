@@ -6,8 +6,9 @@ export const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: fetchBaseQuery({ baseUrl: environment.apiUrl }),
     endpoints: (builder) => ({
-        getUsers: builder.query<User[], void>({
-            query: () => 'users',
+        // login imitation
+        getUserByNameAndPassword: builder.query<User[], Pick<User, 'name' | 'password'>>({
+            query: (params) => `users?name=${params.name}&password=${params.password}`
         }),
         registerUser: builder.mutation<User, User>({
             query: (userInfo) => ({
@@ -19,4 +20,4 @@ export const userApi = createApi({
     }),
 });
 
-export const { useGetUsersQuery, useRegisterUserMutation } = userApi;
+export const { useGetUserByNameAndPasswordQuery, useRegisterUserMutation } = userApi;
