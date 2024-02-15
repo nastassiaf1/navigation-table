@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AddPage from 'pages/addPage';
+import AddPage from 'pages/table/addPage';
 import { BrowserRouter } from 'react-router-dom';
 import mockData from 'mocks/data';
 

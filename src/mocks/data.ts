@@ -1,4 +1,4 @@
-import { TableData } from "interfaces/tableData";
+import { TableData } from "interfaces/table";
 
 const mockData: TableData[] = [
     { id: '1', name: 'John', age: 25, isVerified: true },

@@ -10,7 +10,7 @@ import {
     useRemoveDataMutation,
 } from 'api/table.service.';
 import store from 'store/store';
-import { TableData } from 'interfaces/tableData';
+import { TableData } from 'interfaces/table';
 
 fetchMock.enableMocks();
 

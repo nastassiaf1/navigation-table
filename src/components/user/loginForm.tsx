@@ -23,6 +23,7 @@ export default function LoginForm() {
 
             if (result.data) {
                 sessionStorage.setItem('user', JSON.stringify(result.data));
+
                 dispatch(setUser(result.data));
                 navigate('/');
             } else {

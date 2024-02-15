@@ -4,3 +4,9 @@ export interface TableData {
     age: number;
     isVerified: boolean;
 }
+
+export interface Table {
+    id: string;
+    userId: string;
+    name: string;
+}

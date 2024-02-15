@@ -3,13 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { useSelector } from "react-redux";
 
-import { useUpdateDataMutation, selectUserById } from "../api/table.service.";
+import { useUpdateDataMutation, selectUserById } from "../../api/table.service.";
 
-import { TableData } from "../interfaces/tableData";
-import { maxLengthName, minLengthName } from "../constants/userTable.const";
+import { TableData } from "../../interfaces/table";
+import { maxLengthName, minLengthName } from "../../constants/userTable.const";
 
-import errorStyle from "./../styles/error.module.scss";
-import formStyle from './../styles/form.module.scss';
+import errorStyle from "./../../styles/error.module.scss";
+import formStyle from './../../styles/form.module.scss';
 
 export default function EditPage() {
     const errorMessage = 'Failed to update data. Please try again.';

@@ -1,12 +1,12 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Filter from 'components/filter';
-import { useGetTableDataQuery, useRemoveDataMutation } from '../api/table.service.';
+import { useGetTableDataQuery, useRemoveDataMutation } from '../../api/table.service.';
+import { TableData } from 'interfaces/table';
 
-import styles from './../styles/table.module.scss';
-import { useEffect, useState } from 'react';
-import { TableData } from 'interfaces/tableData';
+import styles from './../../styles/table.module.scss';
 
-export default function TablePage() {
+export default function Table({ tableId }: { tableId: string }) {
   const [removeData] = useRemoveDataMutation();
   const [data, setData] = useState<TableData[]>([])
   const getTableDataQuery = useGetTableDataQuery();

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { createSelector } from '@reduxjs/toolkit';
-import { TableData } from '../interfaces/tableData';
+import { Table, TableData } from '../interfaces/table';
 import { environment } from '../env/env';
 
 export const tableApi = createApi({
@@ -9,6 +9,9 @@ export const tableApi = createApi({
     }),
     tagTypes: ['TableData'],
     endpoints: (builder) => ({
+        getTableMetaDataByUser: builder.query<Table[], string>({
+            query: (userId: string) => `table?userId=${userId}`,
+        }),
         getTableData: builder.query<TableData[], void>({
             query: () => 'data',
         }),
@@ -91,6 +94,7 @@ export const selectUserById = createSelector(
 )
 
 export const {
+    useGetTableMetaDataByUserQuery,
     useGetTableDataQuery,
     useUpdateDataMutation,
     useAddDataMutation,

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { TableData } from "interfaces/tableData";
+import { TableData } from "interfaces/table";
 import { maxAge, minAge } from "constants/userTable.const";
 import { FilterField, FilterParam } from "interfaces/filter";
 import styles from './../styles/filter.module.scss';

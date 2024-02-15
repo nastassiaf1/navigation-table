@@ -3,9 +3,9 @@ import App from "../App";
 import ErrorPage from "../pages/errorPage";
 import About from "../pages/about";
 import Preview from "../components/preview";
-import Table from "../pages/tablePage";
-import EditPage from "../pages/editPage";
-import AddPage from "../pages/addPage";
+import Table from "../pages/table/tablePage";
+import EditPage from "../pages/table/editPage";
+import AddPage from "../pages/table/addPage";
 import RequireAuth from "./guards/table";
 
 const router = createBrowserRouter([

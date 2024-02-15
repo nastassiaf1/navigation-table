@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler, FieldValues } from 'react-hook-form';
 import uuidv4 from 'utils/uuid';
 
-import { useAddDataMutation } from '../api/table.service.';
+import { useAddDataMutation } from '../../api/table.service.';
 
-import Spinner from '../components/spinner';
-import { maxLengthName, minLengthName } from '../constants/userTable.const';
+import Spinner from '../../components/spinner';
+import { maxLengthName, minLengthName } from '../../constants/userTable.const';
 
-import errorStyle from './../styles/error.module.scss';
-import formStyle from './../styles/form.module.scss';
+import errorStyle from './../../styles/error.module.scss';
+import formStyle from './../../styles/form.module.scss';
 
 
 export default function AddPage() {
