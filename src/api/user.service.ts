@@ -7,8 +7,9 @@ export const userApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: environment.apiUrl }),
     endpoints: (builder) => ({
         // login imitation
-        getUserByNameAndPassword: builder.query<User[], Pick<User, 'name' | 'password'>>({
-            query: (params) => `users?name=${params.name}&password=${params.password}`
+        getUserByNameAndPassword: builder.query<User, Pick<User, 'name' | 'password'>>({
+            query: (params) => `users?name=${params.name}&password=${params.password}`,
+            transformResponse: (response: User[]) => response[0],
         }),
         registerUser: builder.mutation<User, User>({
             query: (userInfo) => ({
