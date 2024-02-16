@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useGetTableMetaDataByUserQuery } from "api/table.service.";
+import { useGetTablesMetaDataByUserQuery } from "api/table.service.";
 import Spinner from "components/spinner";
 import Table from "components/table";
 import { RootState } from "store/store";
+
+import styles from "./../../styles/table.module.scss";
 
 export default function TablePage() {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ export default function TablePage() {
 
   if (!user) return <Spinner />;
 
-  const { data: tableData, isLoading } = useGetTableMetaDataByUserQuery(user.id);
+  const { data: tableData, isLoading } = useGetTablesMetaDataByUserQuery(user.id);
 
   const handleCreateTable = () => {
     navigate('/table/create');
@@ -21,12 +23,13 @@ export default function TablePage() {
 
   return <>
     { tableData?.length ?
-      <Table tableId={ tableData.id } /> :
-      <div className='wrapper'>
-          <p>You don't have any table.<br />
+      <Table tableId={ tableData[0].id } /> :
+      <div className={ styles.mainwrapper }>
+          <p className={ styles.description }>You don't have any table.<br />
               <span>Please create a new one</span>
           </p>
           <button
+              className={ styles.addbutton }
               aria-label="Create new table"
               onClick={handleCreateTable}
           >

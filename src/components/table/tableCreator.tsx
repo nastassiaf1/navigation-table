@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import styles from "./../../styles/table.module.scss";
+
 export default function TableCreator() {
     const navigate = useNavigate();
 
@@ -9,10 +11,11 @@ export default function TableCreator() {
 
     return <>
         <div className='wrapper'>
-            <p>You don't have any table.<br />
+            <p className={ styles.description }>You don't have any table.<br />
                 <span>Please create a new one</span>
-            </p>
+            </p>hello
             <button
+                className={ styles.button }
                 aria-label="Create new table"
                 onClick={handleCreateTable}
             >

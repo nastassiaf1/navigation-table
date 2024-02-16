@@ -68,3 +68,26 @@
         text-shadow: 1px 1px rgb(165, 40, 40);
     }
 }
+
+.mainwrapper {
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: center;
+    color: #18865e;
+}
+
+.addbutton {
+    margin: auto;
+    padding: 8px 12px;
+    display: block;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ab6d80;
+    border: initial;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ab6d808f;
+    }
+}

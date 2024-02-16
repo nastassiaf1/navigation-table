@@ -9,8 +9,15 @@ export const tableApi = createApi({
     }),
     tagTypes: ['TableData'],
     endpoints: (builder) => ({
-        getTableMetaDataByUser: builder.query<Table[], string>({
+        getTablesMetaDataByUser: builder.query<Table[], string>({
             query: (userId: string) => `table?userId=${userId}`,
+        }),
+        addTable: builder.mutation<Table, Table>({
+            query: ({ id, userId, name}) => ({
+                url: `data`,
+                method: 'POST',
+                body: { id, userId, name},
+            })
         }),
         getTableData: builder.query<TableData[], void>({
             query: () => 'data',
@@ -94,7 +101,7 @@ export const selectUserById = createSelector(
 )
 
 export const {
-    useGetTableMetaDataByUserQuery,
+    useGetTablesMetaDataByUserQuery,
     useGetTableDataQuery,
     useUpdateDataMutation,
     useAddDataMutation,
