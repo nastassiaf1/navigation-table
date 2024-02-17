@@ -13,11 +13,24 @@ export const tableApi = createApi({
             query: (userId: string) => `table?userId=${userId}`,
         }),
         addTable: builder.mutation<Table, Table>({
-            query: ({ id, userId, name}) => ({
-                url: `data`,
+            query: ({ id, userId, name, columns}) => ({
+                url: `table`,
                 method: 'POST',
-                body: { id, userId, name},
-            })
+                body: { id, userId, name, columns },
+            }),
+            async onQueryStarted(_data, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(
+                        tableApi.util.updateQueryData('getTablesMetaDataByUser', data.userId, (draft) => {
+                            draft.push(data)
+                        })
+                    )
+                } catch(error) {
+                    throw new Error((error as Error).message);
+                }
+            },
         }),
         getTableData: builder.query<TableData[], void>({
             query: () => 'data',
@@ -102,6 +115,7 @@ export const selectUserById = createSelector(
 
 export const {
     useGetTablesMetaDataByUserQuery,
+    useAddTableMutation,
     useGetTableDataQuery,
     useUpdateDataMutation,
     useAddDataMutation,

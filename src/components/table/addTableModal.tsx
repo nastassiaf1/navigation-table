@@ -2,6 +2,8 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useAddTableMutation } from 'api/table.service.';
+import uuidv4 from 'utils/uuid';
 
 import formStyle from './../../styles/form.module.scss';
 import dialogStyle from './../../styles/dialog.module.scss';
@@ -14,6 +16,7 @@ interface ITable {
 }
 
 export default function AddTableModal({ onClose, userId }: { onClose: () => void, userId: string }) {
+    const [addTable] = useAddTableMutation();
     const { register, control, handleSubmit, formState: { errors }, watch } = useForm<ITable>({
         defaultValues: {
             columns: [{ name: "" }]
@@ -32,16 +35,18 @@ export default function AddTableModal({ onClose, userId }: { onClose: () => void
         append({ name: "" });
     };
 
-    const onSubmit = (data: ITable) => {
+    const onSubmit = async (data: ITable) => {
         const columns = data.columns.map(column => column.name).
-            filter(name => name.trim() === '');
+            filter(name => name.trim() !== '');
 
         const tableData = {
-            id: 1,
+            id: uuidv4(),
             name: data.tableName,
             userId,
             columns
         }
+
+        await addTable(tableData);
 
         onClose();
     };
