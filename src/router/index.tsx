@@ -3,7 +3,7 @@ import App from "../App";
 import ErrorPage from "../pages/errorPage";
 import About from "../pages/about";
 import Preview from "../components/preview";
-import Table from "../pages/table/tablePage";
+import Table from "../pages/table";
 import EditPage from "../pages/table/editPage";
 import AddPage from "../pages/table/addPage";
 import RequireAuth from "./guards/table";
