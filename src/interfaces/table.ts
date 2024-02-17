@@ -9,4 +9,5 @@ export interface Table {
     id: string;
     userId: string;
     name: string;
+    columns: string[];
 }

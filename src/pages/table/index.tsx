@@ -36,7 +36,7 @@ export default function TablePage() {
   if (isLoading) return <Spinner />;
 
   return <>
-    {isModalOpen && <AddTableModal onClose={handleCloseModal} />}
+    {isModalOpen && <AddTableModal onClose={handleCloseModal} userId={user.id} />}
     { tableData?.length ?
       <Table tableId={ tableData[0].id } /> :
       <div className={ styles.mainwrapper }>

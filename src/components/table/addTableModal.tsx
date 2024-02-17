@@ -6,14 +6,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import formStyle from './../../styles/form.module.scss';
 import dialogStyle from './../../styles/dialog.module.scss';
 
-interface IColumns {
+interface ITable {
+    tableName: string;
     columns: {
         name: string
     }[]
 }
 
-export default function AddTableModal({ onClose }: { onClose: () => void }) {
-    const { register, control, handleSubmit, formState: { errors }, watch } = useForm<IColumns>({
+export default function AddTableModal({ onClose, userId }: { onClose: () => void, userId: string }) {
+    const { register, control, handleSubmit, formState: { errors }, watch } = useForm<ITable>({
         defaultValues: {
             columns: [{ name: "" }]
         }
@@ -25,15 +26,22 @@ export default function AddTableModal({ onClose }: { onClose: () => void }) {
 
     const columnNames = watch("columns");
 
-    const isSaveButtonDisabled = fields.length === 0 || columnNames.every(column => column.name.trim() === '');
+    const isSaveButtonDisabled = fields.length === 1 || columnNames.every(column => column.name.trim() === '');
 
     const handleAddColumn = () => {
         append({ name: "" });
     };
 
-    const onSubmit = (data: IColumns) => {
+    const onSubmit = (data: ITable) => {
         const columns = data.columns.map(column => column.name).
             filter(name => name.trim() === '');
+
+        const tableData = {
+            id: 1,
+            name: data.tableName,
+            userId,
+            columns
+        }
 
         onClose();
     };
@@ -45,14 +53,17 @@ export default function AddTableModal({ onClose }: { onClose: () => void }) {
                     <CloseIcon />
                 </IconButton>
             </div>
+            <div style={{marginBottom: '30px', borderBottom: '1px solid white'}}>
+                <input {...register("tableName")} className={formStyle.input} placeholder="Table Name" aria-label="Input Table Name" />
+            </div>
             <div>
                 {fields.map((field, index) => (
                     <div key={field.id} className="columnWrapper">
                         <input {...register(`columns.${index}.name`)} className={formStyle.input} />
                         <IconButton
+                            className="deleteButton"
                             aria-label="delete column"
                             onClick={() => remove(index)}
-                            className="deleteButton"
                         >
                             <DeleteIcon />
                         </IconButton>
