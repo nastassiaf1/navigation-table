@@ -26,7 +26,6 @@ export default function TablePage() {
   const { data: tableData, isLoading } = useGetTablesMetaDataByUserQuery(user.id);
 
   const handleCreateTable = () => {
-    console.log('handleCreateTable')
     setIsModalOpen(true);
   };
 

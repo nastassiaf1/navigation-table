@@ -13,7 +13,7 @@ interface IColumns {
 }
 
 export default function AddTableModal({ onClose }: { onClose: () => void }) {
-    const { register, control, handleSubmit, formState: { errors } } = useForm<IColumns>({
+    const { register, control, handleSubmit, formState: { errors }, watch } = useForm<IColumns>({
         defaultValues: {
             columns: [{ name: "" }]
         }
@@ -22,6 +22,10 @@ export default function AddTableModal({ onClose }: { onClose: () => void }) {
         control,
         name: "columns"
     });
+
+    const columnNames = watch("columns");
+
+    const isSaveButtonDisabled = fields.length === 0 || columnNames.every(column => column.name.trim() === '');
 
     const handleAddColumn = () => {
         append({ name: "" });
@@ -57,7 +61,7 @@ export default function AddTableModal({ onClose }: { onClose: () => void }) {
             </div>
             <div className={dialogStyle.btncontainer}>
                 <button type="button" aria-label="create new column" className={dialogStyle.addbutton} onClick={handleAddColumn}>Add column</button>
-                <button type="submit" aria-label="create new table" className={formStyle.savebutton}>Save</button>                
+                <button type="submit" aria-label="create new table" className={formStyle.savebutton} disabled={isSaveButtonDisabled}>Save</button>
             </div>
         </form>
     </div>
