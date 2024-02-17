@@ -4,9 +4,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import formStyle from './../../styles/form.module.scss';
+import dialogStyle from './../../styles/dialog.module.scss';
+
+interface IColumns {
+    columns: {
+        name: string
+    }[]
+}
 
 export default function AddTableModal({ onClose }: { onClose: () => void }) {
-    const { register, control, handleSubmit, formState: { errors } } = useForm({
+    const { register, control, handleSubmit, formState: { errors } } = useForm<IColumns>({
         defaultValues: {
             columns: [{ name: "" }]
         }
@@ -20,16 +27,20 @@ export default function AddTableModal({ onClose }: { onClose: () => void }) {
         append({ name: "" });
     };
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const onSubmit = (data: IColumns) => {
+        const columns = data.columns.map(column => column.name).
+            filter(name => name.trim() === '');
+
         onClose();
     };
 
-    return <>
-        <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
-            <IconButton aria-label="close create table modal" onClick={onClose}>
-                <CloseIcon />
-            </IconButton>
+    return <div className={dialogStyle.wrapper}>
+        <form className={`${formStyle.form} ${dialogStyle.content}`} onSubmit={handleSubmit(onSubmit)}>
+            <div className={dialogStyle.cancelbtn}>
+                <IconButton aria-label="close create table modal" onClick={onClose}>
+                    <CloseIcon />
+                </IconButton>
+            </div>
             <div>
                 {fields.map((field, index) => (
                     <div key={field.id} className="columnWrapper">
@@ -44,8 +55,10 @@ export default function AddTableModal({ onClose }: { onClose: () => void }) {
                     </div>
                 ))}
             </div>
-            <button type="button" aria-label="create new column" onClick={handleAddColumn}>Add column</button>
-            <button type="submit" aria-label="create new table" className={formStyle.savebutton}>Add Table</button>
+            <div className={dialogStyle.btncontainer}>
+                <button type="button" aria-label="create new column" className={dialogStyle.addbutton} onClick={handleAddColumn}>Add column</button>
+                <button type="submit" aria-label="create new table" className={formStyle.savebutton}>Save</button>                
+            </div>
         </form>
-    </>
+    </div>
 };

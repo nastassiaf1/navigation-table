@@ -31,7 +31,6 @@ export default function TablePage() {
   };
 
   const handleCloseModal = () => {
-    console.log('handleCloseModal')
     setIsModalOpen(false);
   };
 

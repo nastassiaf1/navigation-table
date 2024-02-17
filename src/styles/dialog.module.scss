@@ -1,0 +1,53 @@
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #46414194;
+
+    button {
+        width: 100px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dfdfdf94;
+        }
+    }
+}
+
+.content {
+    position: relative;
+    padding: 8px 12px;
+    background-color: #ffc2c291;
+    border-radius: 6px;
+
+    &:first-of-type(button) {
+        position: absolute;
+        right: 0;
+        width: initial;
+    }
+}
+
+.cancelbtn {
+    margin-left: auto;
+    width: max-content;
+
+    button {
+        width: initial;
+    }
+}
+
+.btncontainer {
+    margin: 8px 0;
+}
+
+.addbutton {
+    color: #7abfad;
+    background-color: #fff;
+}
