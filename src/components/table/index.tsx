@@ -1,67 +1,53 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Filter from 'components/filter';
-import { useGetTableDataQuery, useRemoveDataMutation } from '../../api/table.service.';
-import { TableData } from 'interfaces/table';
+import { useUpdateTableMutation } from '../../api/table.service.';
+import { Table } from 'interfaces/table';
 
 import styles from './../../styles/table.module.scss';
 
-export default function Table({ tableId }: { tableId: string }) {
-  const [removeData] = useRemoveDataMutation();
-  const [data, setData] = useState<TableData[]>([])
-  const getTableDataQuery = useGetTableDataQuery();
-  const { data: initialData, isLoading, error } = getTableDataQuery;
+export default function Table({ data }: { data: Table }) {
+  const [updateTable] = useUpdateTableMutation();
 
-  useEffect(() => {
-    setData(initialData || [])
-  }, [initialData])
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+  async function onDeleteRow(rowId: string) {
+    console.log(rowId)
+    const updatedTable =  {
+      ...data,
+      rows: data.rows!.filter(row => row.id !== rowId)
+    };
+    await updateTable(updatedTable);
   }
 
-  if (error) {
-    return <div>Error loading data: {(error as Error).message}</div>;
-  }
-
-  async function onDeleteUser(id: string) {
-    await removeData(id);
-  }
-
-  return <div className={styles.tablewrapper}>
-    <Filter disabled={!!data} setData={setData} data={initialData || []}/>
-
-    { data.length ?
+  return (
+    <div className={styles.tablewrapper}>
       <table className={styles.table}>
-          <thead>
-              <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Verification</th>
-                  <th></th>
+        <thead>
+          <tr>
+            {data.columns.map((columnName) => (
+              <th key={columnName}>{columnName}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            data.rows ? data.rows.map((row) => (
+              <tr key={row.id}>
+                {data.columns.map((columnName) => (
+                  <td key={`${row.id}-${columnName}`}>{row[columnName]}</td>
+                ))}
+                <td>
+                  <Link to={`/table/${data.id}/edit/${row.id}`} aria-label="Edit row">Edit</Link>
+                  <button className={styles.button} onClick={() => onDeleteRow(row.id)}>Delete</button>
+                </td>
               </tr>
-          </thead>
-          <tbody>
-              { data.map((item) => (
-                  <tr key={item.id}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.age}</td>
-                      <td>{`${item.isVerified}`}</td>
-                      <td>
-                          <Link to={`/table/${item.id}/edit`} aria-label={`Edit user ${item.name}, id ${item.id}`}>Edit</Link>
-                          <button className={`${styles.button} ${styles.itembutton}`} aria-label={`Remove user ${item.name}, id ${item.id}`} onClick={() => onDeleteUser(item.id!)}>Delete</button>
-                      </td>
-                  </tr>
-                ))
-              }
-          </tbody>
-      </table> :
-      <p className={styles.description}>Users not found</p>
-    }
-    <Link to={`/table/add`} className={styles.button} aria-label="Add new user">
-        Add
-    </Link>
-  </div>
+            )) :
+            <tr className={styles.description}>
+              <td colSpan={data.columns.length}>No data found in the table</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <Link to={`/table/${data.id}/add`} className={styles.button} aria-label="Add new row">
+          Add
+      </Link>
+    </div>
+  )
 };

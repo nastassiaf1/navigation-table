@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { createSelector } from '@reduxjs/toolkit';
-import { Table, TableData } from '../interfaces/table';
+import { Table } from '../interfaces/table';
 import { environment } from '../env/env';
 
 export const tableApi = createApi({
@@ -9,7 +9,7 @@ export const tableApi = createApi({
     }),
     tagTypes: ['TableData'],
     endpoints: (builder) => ({
-        getTablesMetaDataByUser: builder.query<Table[], string>({
+        getTablesDataByUser: builder.query<Table[], string>({
             query: (userId: string) => `table?userId=${userId}`,
         }),
         addTable: builder.mutation<Table, Table>({
@@ -23,7 +23,7 @@ export const tableApi = createApi({
                     const { data } = await queryFulfilled;
 
                     dispatch(
-                        tableApi.util.updateQueryData('getTablesMetaDataByUser', data.userId, (draft) => {
+                        tableApi.util.updateQueryData('getTablesDataByUser', data.userId, (draft) => {
                             draft.push(data)
                         })
                     )
@@ -32,54 +32,34 @@ export const tableApi = createApi({
                 }
             },
         }),
-        getTableData: builder.query<TableData[], void>({
+        getTableData: builder.query<Table[], void>({
             query: () => 'data',
         }),
-        updateData: builder.mutation<TableData, TableData>({
-            query: ({ id, name, age, isVerified }) => ({
-                url: `data/${id}`,
+        updateTable: builder.mutation<Table, Table>({
+            query: (table) => ({
+                url: `table/${table.id}`,
                 method: 'PUT',
-                body: { name, age, isVerified },
+                body: table,
             }),
-            async onQueryStarted(_data, { dispatch, queryFulfilled }) {
+            async onQueryStarted(data, { dispatch, queryFulfilled }) {
+                const res = dispatch(
+                    tableApi.util.updateQueryData('getTablesDataByUser', data.userId, (draft) => {
+                        const index = draft.findIndex(n => n.id === data.id);
+
+                        if (index !== -1) {
+                            draft[index] = data;
+                        }
+                    })
+                )
+
                 try {
-                    const { data } = await queryFulfilled;
-
-                    dispatch(
-                        tableApi.util.updateQueryData('getTableData', undefined, (draft) => {
-                            const index = draft.findIndex(n => n.id === data.id);
-
-                            if (index !== -1) {
-                                draft[index] = data;
-                            }
-                        })
-                    )
-                } catch(error) {
-                    throw new Error((error as Error).message);
+                  await queryFulfilled
+                } catch {
+                    res.undo()
                 }
             },
         }),
-        addData: builder.mutation<TableData, TableData>({
-            query: ({ id, name, age, isVerified }) => ({
-                url: `data`,
-                method: 'POST',
-                body: { id, name, age, isVerified },
-            }),
-            async onQueryStarted(_data, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-
-                    dispatch(
-                        tableApi.util.updateQueryData('getTableData', undefined, (draft) => {
-                            draft.push(data)
-                        })
-                    )
-                } catch(error) {
-                    throw new Error((error as Error).message);
-                }
-            },
-        }),
-        removeData: builder.mutation<TableData, string>({
+        removeTableRow: builder.mutation<Table, string>({
             query: (id) => ({
                 url: `data/${id}`,
                 method: 'DELETE',
@@ -114,10 +94,9 @@ export const selectUserById = createSelector(
 )
 
 export const {
-    useGetTablesMetaDataByUserQuery,
+    useGetTablesDataByUserQuery,
     useAddTableMutation,
     useGetTableDataQuery,
-    useUpdateDataMutation,
-    useAddDataMutation,
-    useRemoveDataMutation
+    useUpdateTableMutation,
+    useRemoveTableRowMutation
 } = tableApi;
