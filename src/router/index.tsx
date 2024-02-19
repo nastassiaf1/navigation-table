@@ -4,7 +4,7 @@ import ErrorPage from "../pages/errorPage";
 import About from "../pages/about";
 import Preview from "../components/preview";
 import Table from "../pages/table";
-//import EditPage from "../pages/table/editPage";
+import EditRowPage from "../pages/table/editRowPage";
 import AddRowPage from "../pages/table/addRowPage";
 import RequireAuth from "./guards/table";
 
@@ -33,14 +33,14 @@ const router = createBrowserRouter([
                         </RequireAuth>
                     ),
                 },
-                /*{
-                    path: "/table/:rowId/edit",
+                {
+                    path: "/table/:tableId/edit/:rowId",
                     element: (
                         <RequireAuth>
-                            <EditPage />
+                            <EditRowPage />
                         </RequireAuth>
                     ),
-                },*/
+                },
                 {
                     path: "/table/:tableId/add",
                     element: (

@@ -8,7 +8,6 @@ export default function Table({ data }: { data: Table }) {
   const [updateTable] = useUpdateTableMutation();
 
   async function onDeleteRow(rowId: string) {
-    console.log(rowId)
     const updatedTable =  {
       ...data,
       rows: data.rows!.filter(row => row.id !== rowId)
@@ -28,7 +27,7 @@ export default function Table({ data }: { data: Table }) {
         </thead>
         <tbody>
           {
-            data.rows ? data.rows.map((row) => (
+            data.rows?.length ? data.rows.map((row) => (
               <tr key={row.id}>
                 {data.columns.map((columnName) => (
                   <td key={`${row.id}-${columnName}`}>{row[columnName]}</td>

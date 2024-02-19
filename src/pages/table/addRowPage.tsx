@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import uuidv4 from 'utils/uuid';
 import { useUpdateTableMutation } from '../../api/table.service.';
 import Spinner from '../../components/spinner';
-import { RootState } from 'store/store';
+import { selectCurrentTable } from 'store/selectors/table';
 
 import formStyle from './../../styles/form.module.scss';
 import errorStyle from './../../styles/error.module.scss';
 
 export default function AddRowPage() {
     const navigate = useNavigate();
-    const currentTable = useSelector((state: RootState) => state.currentTable.currentTable);
+    const currentTable = useSelector(selectCurrentTable);
     const [updateTable, { isLoading }] = useUpdateTableMutation();
     const { control, handleSubmit, reset, formState: { errors } } = useForm();
 

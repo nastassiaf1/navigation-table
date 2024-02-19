@@ -9,25 +9,25 @@ import Spinner from "components/spinner";
 import Table from "components/table";
 import { RootState } from "store/store";
 import { setCurrentTable } from 'store/slices/currentTable.slice';
+import AddTableDialog from "components/table/addTableDialog";
 
 import styles from "./../../styles/table.module.scss";
-import AddTableModal from "components/table/addTableModal";
 
 export default function TablePage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDialogOpened, setIsDialogOpened] = useState(false);
   const [activeTab, setActiveTab] = useState('');
   const user = useSelector((state: RootState) => state.user.currentUser);
   const location = useLocation();
   const navigate = useNavigate();
   const { tableId } = useParams();
   const dispatch = useDispatch();
-  const isModalOpenByRouter = location.pathname.includes('/table/create');
+  const isDialogOpenedByRouter = location.pathname.includes('/table/create');
 
   useEffect(() => {
-    if (isModalOpenByRouter && !isModalOpen) {
-      useState(setIsModalOpen(true));
+    if (isDialogOpenedByRouter && !isDialogOpened) {
+      useState(setIsDialogOpened(true));
     }
-  }, [isModalOpenByRouter]);
+  }, [isDialogOpenedByRouter]);
 
   if (!user) return <Spinner />;
 
@@ -47,11 +47,11 @@ export default function TablePage() {
   }, [tableId, tableData, dispatch]);
 
   const handleCreateTable = () => {
-    setIsModalOpen(true);
+    setIsDialogOpened(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsDialogOpened(false);
   };
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
@@ -65,7 +65,7 @@ export default function TablePage() {
   if (isLoading) return <Spinner />;
 
   return <div>
-    {isModalOpen && <AddTableModal onClose={handleCloseModal} userId={user.id} />}
+    {isDialogOpened && <AddTableDialog onClose={handleCloseModal} userId={user.id} />}
     { tableData?.length ? <>
       <button
         className={styles.addbutton}
@@ -89,7 +89,7 @@ export default function TablePage() {
         })}
       </TabContext>
     </>
-       :
+      :
       <div className={ styles.mainwrapper }>
           <p className={ styles.description }>You don't have any table.<br />
               <span>Please create a new one</span>
