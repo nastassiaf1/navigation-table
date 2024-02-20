@@ -4,8 +4,6 @@ import ErrorPage from "../pages/errorPage";
 import About from "../pages/about";
 import Preview from "../components/preview";
 import Table from "../pages/table";
-import EditRowPage from "../pages/table/editRowPage";
-import AddRowPage from "../pages/table/addRowPage";
 import RequireAuth from "./guards/table";
 
 const router = createBrowserRouter([
@@ -33,22 +31,7 @@ const router = createBrowserRouter([
                         </RequireAuth>
                     ),
                 },
-                {
-                    path: "/table/:tableId/edit/:rowId",
-                    element: (
-                        <RequireAuth>
-                            <EditRowPage />
-                        </RequireAuth>
-                    ),
-                },
-                {
-                    path: "/table/:tableId/add",
-                    element: (
-                        <RequireAuth>
-                            <AddRowPage />
-                        </RequireAuth>
-                    ),
-                },
+
                 { path: "login", element: <Outlet /> },
                 { path: "registration", element: <Outlet /> },
               ]

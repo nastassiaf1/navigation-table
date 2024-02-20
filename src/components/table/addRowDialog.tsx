@@ -1,16 +1,20 @@
 import { useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import uuidv4 from 'utils/uuid';
 import { useUpdateTableMutation } from '../../api/table.service.';
-import Spinner from '../../components/spinner';
+import Spinner from '../spinner';
 import { selectCurrentTable } from 'store/selectors/table';
 
 import formStyle from './../../styles/form.module.scss';
 import errorStyle from './../../styles/error.module.scss';
 
-export default function AddRowPage() {
-    const navigate = useNavigate();
+interface AddRowDialogProps {
+    onClose: () => void;
+}
+
+export default function AddRowDialog({ onClose }: AddRowDialogProps) {
     const currentTable = useSelector(selectCurrentTable);
     const [updateTable, { isLoading }] = useUpdateTableMutation();
     const { control, handleSubmit, reset, formState: { errors } } = useForm();
@@ -26,7 +30,7 @@ export default function AddRowPage() {
             await updateTable({ ...currentTable, rows: [...(currentTable.rows || []), newRow] });
 
             reset();
-            navigate(-1);
+            onClose();
         } catch (error) {
             console.error('Error adding row:', error);
         }
@@ -42,6 +46,11 @@ export default function AddRowPage() {
 
     return (
         <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={formStyle.cancelbtn}>
+                <IconButton aria-label="close create table modal" onClick={onClose}>
+                    <CloseIcon />
+                </IconButton>
+            </div>
             {currentTable.columns.map((column) => (
                 <Controller
                     key={column}
@@ -58,9 +67,9 @@ export default function AddRowPage() {
                     )}
                 />
             ))}
-            <div className={formStyle.buttons}>
+            <div className={formStyle.btncontainer}>
                 <button type="submit" className={formStyle.savebutton}>Save</button>
-                <button type="button" className={formStyle.cancelbutton} onClick={() => navigate(-1)}>Cancel</button>
+                <button type="button" className={formStyle.cancelbutton} onClick={onClose}>Cancel</button>
             </div>
         </form>
     );

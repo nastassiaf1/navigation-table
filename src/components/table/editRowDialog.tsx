@@ -1,39 +1,42 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form"
-import { useSelector } from "react-redux";
-import { useUpdateTableMutation } from "../../api/table.service.";
+import { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { useUpdateTableMutation } from '../../api/table.service.';
 import { selectCurrentTable } from 'store/selectors/table';
-import Spinner from "components/spinner";
+import { RowTable } from 'interfaces/table';
+import Spinner from 'components/spinner';
 
-import errorStyle from "./../../styles/error.module.scss";
+import errorStyle from './../../styles/error.module.scss';
 import formStyle from './../../styles/form.module.scss';
 
-export default function EditRowPage() {
-    const { rowId } = useParams();
-    const navigate = useNavigate();
+interface EditRowDialogProps {
+  row: RowTable;
+  onClose: () => void;
+}
+
+export default function EditRowDialog({ row, onClose }: EditRowDialogProps) {
     const currentTable = useSelector(selectCurrentTable);
     const [updateTable, { isLoading, isError, error }] = useUpdateTableMutation();
     const { control, handleSubmit, setValue, formState: { errors } } = useForm();
 
     useEffect(() => {
-      const currentRow = currentTable?.rows?.find(row => row.id === rowId);
-
-      if (currentRow) {
-        Object.keys(currentRow).forEach(key => {
-          setValue(key, currentRow[key]);
+      if (row) {
+        Object.keys(row).forEach(key => {
+          setValue(key, row[key]);
         });
       }
-    }, [currentTable, rowId, setValue]);
+    }, [row, setValue]);
 
     const onSubmit = async data => {
       try {
-        const updatedRows = currentTable?.rows?.map(row => row.id === rowId ? { ...row, ...data } : row);
+        const updatedRows = currentTable?.rows?.map(currentRow => currentRow.id === row.id ? { ...currentRow, ...data } : currentRow);
 
         if (updatedRows && currentTable) {
             const updatedTable = { ...currentTable, rows: updatedRows };
             await updateTable(updatedTable);
-            navigate(`/table/${updatedTable.id}`);
+            onClose();
         }
       } catch (err) {
         console.error("Failed to update row:", err);
@@ -46,6 +49,11 @@ export default function EditRowPage() {
 
     return (
       <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={formStyle.cancelbtn}>
+            <IconButton aria-label="close create table modal" onClick={onClose}>
+                <CloseIcon />
+            </IconButton>
+        </div>
         {currentTable?.columns.map(column => (
           <Controller
             key={column}
@@ -60,8 +68,9 @@ export default function EditRowPage() {
             )}
           />
         ))}
-        <button type="submit" className={formStyle.saveButton}>Save</button>
-        <button type="button" className={formStyle.cancelButton} onClick={() => navigate(-1)}>Cancel</button>
+        <div className={formStyle.btncontainer}>
+          <button type="submit" className={formStyle.saveButton}>Save</button>
+        </div>
       </form>
     );
-  }
+}

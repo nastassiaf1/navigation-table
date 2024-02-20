@@ -9,6 +9,7 @@ import Spinner from "components/spinner";
 import Table from "components/table";
 import { RootState } from "store/store";
 import { setCurrentTable } from 'store/slices/currentTable.slice';
+import ModalDialogPortal from "components/modalDialogPortal";
 import AddTableDialog from "components/table/addTableDialog";
 
 import styles from "./../../styles/table.module.scss";
@@ -65,7 +66,9 @@ export default function TablePage() {
   if (isLoading) return <Spinner />;
 
   return <div>
-    {isDialogOpened && <AddTableDialog onClose={handleCloseModal} userId={user.id} />}
+    {isDialogOpened && <ModalDialogPortal>
+      <AddTableDialog onClose={handleCloseModal} userId={user.id} />
+    </ModalDialogPortal>}
     { tableData?.length ? <>
       <button
         className={styles.addbutton}

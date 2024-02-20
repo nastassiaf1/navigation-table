@@ -1,10 +1,22 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useUpdateTableMutation } from '../../api/table.service.';
-import { Table } from 'interfaces/table';
+import { RowTable, Table } from 'interfaces/table';
+import AddRowDialog from './addRowDialog';
+import EditRowDialog from './editRowDialog';
+import ModalDialogPortal from './../modalDialogPortal';
 
 import styles from './../../styles/table.module.scss';
 
 export default function Table({ data }: { data: Table }) {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingRow, setEditingRow] = useState<RowTable | null>(null);
+
+  const openEditModal = (row: RowTable) => {
+    setEditingRow(row);
+    setIsEditModalOpen(true);
+  };
+
   const [updateTable] = useUpdateTableMutation();
 
   async function onDeleteRow(rowId: string) {
@@ -33,8 +45,8 @@ export default function Table({ data }: { data: Table }) {
                   <td key={`${row.id}-${columnName}`}>{row[columnName]}</td>
                 ))}
                 <td>
-                  <Link to={`/table/${data.id}/edit/${row.id}`} aria-label="Edit row">Edit</Link>
-                  <button className={styles.button} onClick={() => onDeleteRow(row.id)}>Delete</button>
+                  <button aria-label="Edit row" onClick={() => openEditModal(row)}>Edit</button>
+                  <button className={styles.button} aria-label="Delete row" onClick={() => onDeleteRow(row.id)}>Delete</button>
                 </td>
               </tr>
             )) :
@@ -44,9 +56,20 @@ export default function Table({ data }: { data: Table }) {
           }
         </tbody>
       </table>
-      <Link to={`/table/${data.id}/add`} className={styles.button} aria-label="Add new row">
-          Add
-      </Link>
+      <button className={styles.button} aria-label="Add new row" onClick={() => setIsAddModalOpen(true)}>
+        Add New Row
+      </button>
+
+      { isAddModalOpen && (
+        <ModalDialogPortal>
+          <AddRowDialog onClose={() => setIsAddModalOpen(false)} />
+        </ModalDialogPortal>
+      )}
+      { isEditModalOpen && (
+        <ModalDialogPortal>
+          <EditRowDialog row={editingRow!} onClose={() => setIsEditModalOpen(false)} />
+        </ModalDialogPortal>
+      )}
     </div>
   )
 };
