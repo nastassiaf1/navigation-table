@@ -35,7 +35,7 @@ export default function Table({ data }: { data: Table }) {
             {data.columns.map((columnName) => (
               <th key={columnName}>{columnName}</th>
             ))}
-            <th></th>
+            { !!data.rows?.length && <th></th> }
           </tr>
         </thead>
         <tbody>
