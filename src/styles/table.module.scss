@@ -42,33 +42,6 @@
     font-weight: bold;
 }
 
-.button {
-    display: block;
-    margin-left: auto;
-    padding: 8px 12px;
-    width: 34px;
-    font-size: 16px;
-    color: #a45139;
-    background: initial;
-    border: initial;
-    border-radius: 4px;
-
-    &:hover {
-        background-color: #f0f8ff38;
-    }
-}
-
-.itembutton {
-    display: inline-block;
-    width: 70px;
-    color: #E27D60;
-    cursor: pointer;
-
-    &:hover {
-        text-shadow: 1px 1px rgb(165, 40, 40);
-    }
-}
-
 .mainwrapper {
     font-size: 20px;
     line-height: 1.5;
@@ -89,5 +62,30 @@
 
     &:hover {
         background-color: #ab6d808f;
+    }
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #a45139;
+    background: initial;
+    border: 1px solid #f0f8ff38;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f0f8ff38;
+    }
+}
+
+.deletebutton {
+    margin-left: 12px;
+    border: 1px solid #fff;
+    background-color: #f1f1f1;
+
+    &:hover {
+        background-color: #fff;
     }
 }

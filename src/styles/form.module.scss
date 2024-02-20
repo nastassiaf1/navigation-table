@@ -11,8 +11,8 @@
 
     button {
         margin: 0 12px;
-        width: 80px;
-        height: 24px;
+        width: initial;
+        font-weight: 700;
         border: 0px;
         border-radius: 4px;
     }
@@ -28,17 +28,51 @@
     text-wrap: nowrap;
 }
 
-.savebutton {
+.label {
+    margin-right: 12px;
     color: #fff;
-    background-color: #7abfad;
+}
 
-   &[disabled] {
-        opacity: 0.5;
-        pointer-events: none;
-   }
+.btncontainer {
+    margin: 8px 0;
+    text-align: right;
+
+    button {
+        padding: 0 12px;
+        height: 26px;
+        cursor: pointer;
+    }
+}
+
+.confirmbutton {
+    padding: 0 12px;
+    height: 26px;
+    color: #fff;
+    background-color: #ab6d80;
+
+    &:hover {
+        background-color: #985f70;
+    }
+
+    &[disabled] {
+            opacity: 0.5;
+            pointer-events: none;
+    }
+}
+
+.addbutton {
+    color: rgb(0, 0, 0, 0.73);
+
+    &:hover {
+        color: rgba(0, 0, 0, 0.54);
+    }
 }
 
 .cancelbutton {
-    color: #E27D60;
-    background-color: #fff;
+    margin-left: auto;
+    width: max-content;
+
+    button {
+        width: initial;
+    }
 }

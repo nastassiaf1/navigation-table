@@ -48,7 +48,7 @@ export default function RegistrationForm() {
                 <input id="password" placeholder="Password" type="password" {...register('password', { required: true })} />
                 {errors.password && <span className={`${errorStyle.error} ${formStyle.error}`}>This field is required</span>}
             </div>
-            <button type="submit" className={ formStyle.savebutton } disabled={isLoading}>Register</button>
+            <button type="submit" className={ formStyle.confirmbutton } disabled={isLoading}>Register</button>
         </form>
     );
 }

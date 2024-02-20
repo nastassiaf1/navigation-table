@@ -19,7 +19,7 @@ interface EditRowDialogProps {
 export default function EditRowDialog({ row, onClose }: EditRowDialogProps) {
     const currentTable = useSelector(selectCurrentTable);
     const [updateTable, { isLoading, isError, error }] = useUpdateTableMutation();
-    const { control, handleSubmit, setValue, formState: { errors } } = useForm();
+    const { control, handleSubmit, setValue } = useForm();
 
     useEffect(() => {
       if (row) {
@@ -49,7 +49,7 @@ export default function EditRowDialog({ row, onClose }: EditRowDialogProps) {
 
     return (
       <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={formStyle.cancelbtn}>
+        <div className={formStyle.cancelbutton}>
             <IconButton aria-label="close create table modal" onClick={onClose}>
                 <CloseIcon />
             </IconButton>
@@ -61,15 +61,14 @@ export default function EditRowDialog({ row, onClose }: EditRowDialogProps) {
             control={control}
             render={({ field }) => (
               <div className={formStyle.formItem}>
-                <label>{column}</label>
-                <input {...field} />
-                {errors[column] && <span className={errorStyle.error}>{errors[column].message}</span>}
+                <label className={formStyle.label} htmlFor={column}>{column}</label>
+                <input id={column} {...field} />
               </div>
             )}
           />
         ))}
         <div className={formStyle.btncontainer}>
-          <button type="submit" className={formStyle.saveButton}>Save</button>
+          <button type="submit" className={formStyle.confirmbutton}>Save</button>
         </div>
       </form>
     );

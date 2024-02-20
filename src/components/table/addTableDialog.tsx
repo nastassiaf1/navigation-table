@@ -51,7 +51,7 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
     };
 
     return <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={formStyle.cancelbtn}>
+        <div className={formStyle.cancelbutton}>
             <IconButton aria-label="close create table modal" onClick={onClose}>
                 <CloseIcon />
             </IconButton>
@@ -75,7 +75,7 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
         </div>
         <div className={formStyle.btncontainer}>
             <button type="button" aria-label="create new column" className={formStyle.addbutton} onClick={handleAddColumn}>Add column</button>
-            <button type="submit" aria-label="create new table" className={formStyle.savebutton} disabled={isSaveButtonDisabled}>Save</button>
+            <button type="submit" aria-label="create new table" className={formStyle.confirmbutton} disabled={isSaveButtonDisabled}>Save</button>
         </div>
     </form>
 };

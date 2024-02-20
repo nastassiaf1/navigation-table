@@ -35,6 +35,7 @@ export default function Table({ data }: { data: Table }) {
             {data.columns.map((columnName) => (
               <th key={columnName}>{columnName}</th>
             ))}
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -45,8 +46,8 @@ export default function Table({ data }: { data: Table }) {
                   <td key={`${row.id}-${columnName}`}>{row[columnName]}</td>
                 ))}
                 <td>
-                  <button aria-label="Edit row" onClick={() => openEditModal(row)}>Edit</button>
-                  <button className={styles.button} aria-label="Delete row" onClick={() => onDeleteRow(row.id)}>Delete</button>
+                  <button className={styles.button} aria-label="Edit row" onClick={() => openEditModal(row)}>Edit</button>
+                  <button className={`${styles.button} ${styles.deletebutton}`} aria-label="Delete row" onClick={() => onDeleteRow(row.id)}>Delete</button>
                 </td>
               </tr>
             )) :

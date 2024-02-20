@@ -8,7 +8,6 @@ import Spinner from '../spinner';
 import { selectCurrentTable } from 'store/selectors/table';
 
 import formStyle from './../../styles/form.module.scss';
-import errorStyle from './../../styles/error.module.scss';
 
 interface AddRowDialogProps {
     onClose: () => void;
@@ -17,7 +16,7 @@ interface AddRowDialogProps {
 export default function AddRowDialog({ onClose }: AddRowDialogProps) {
     const currentTable = useSelector(selectCurrentTable);
     const [updateTable, { isLoading }] = useUpdateTableMutation();
-    const { control, handleSubmit, reset, formState: { errors } } = useForm();
+    const { control, handleSubmit, reset } = useForm();
 
     const onSubmit = async (data) => {
         if (!currentTable) {
@@ -46,7 +45,7 @@ export default function AddRowDialog({ onClose }: AddRowDialogProps) {
 
     return (
         <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className={formStyle.cancelbtn}>
+            <div className={formStyle.cancelbutton}>
                 <IconButton aria-label="close create table modal" onClick={onClose}>
                     <CloseIcon />
                 </IconButton>
@@ -57,19 +56,15 @@ export default function AddRowDialog({ onClose }: AddRowDialogProps) {
                     name={column}
                     control={control}
                     defaultValue=""
-                    rules={{ required: `${column} is required` }}
                     render={({ field }) => (
                         <div className={formStyle.formitem}>
-                            <label htmlFor={column}>{column}</label>
-                            <input id={column} {...field} />
-                            {errors[column] && <span className={errorStyle.error}>{errors[column].message}</span>}
+                            <input id={column} {...field} placeholder={column} />
                         </div>
                     )}
                 />
             ))}
             <div className={formStyle.btncontainer}>
-                <button type="submit" className={formStyle.savebutton}>Save</button>
-                <button type="button" className={formStyle.cancelbutton} onClick={onClose}>Cancel</button>
+                <button type="submit" className={formStyle.confirmbutton}>Save</button>
             </div>
         </form>
     );
