@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAddTableMutation } from 'api/table.service.';
+import { useAddTableMutation } from 'api/table.service';
 import uuidv4 from 'utils/uuid';
 
 import formStyle from './../../styles/form.module.scss';

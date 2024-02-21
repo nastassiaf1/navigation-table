@@ -8,7 +8,7 @@ import {
     useUpdateDataMutation,
     useAddDataMutation,
     useRemoveDataMutation,
-} from 'api/table.service.';
+} from 'api/table.service';
 import store from 'store/store';
 import { TableData } from 'interfaces/table';
 

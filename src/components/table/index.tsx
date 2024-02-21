@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useRemoveTableMutation, useUpdateTableMutation } from '../../api/table.service.';
+import { useRemoveTableMutation, useUpdateTableMutation } from '../../api/table.service';
 import { RowTable, Table } from 'interfaces/table';
 import AddRowDialog from './addRowDialog';
 import EditRowDialog from './editRowDialog';

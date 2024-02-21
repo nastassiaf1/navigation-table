@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { useUpdateTableMutation } from '../../api/table.service.';
+import { useUpdateTableMutation } from '../../api/table.service';
 import { selectCurrentTable } from 'store/selectors/table';
 import { RowTable } from 'interfaces/table';
 import Spinner from 'components/spinner';

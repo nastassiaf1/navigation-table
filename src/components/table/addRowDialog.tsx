@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import uuidv4 from 'utils/uuid';
-import { useUpdateTableMutation } from '../../api/table.service.';
+import { useUpdateTableMutation } from '../../api/table.service';
 import Spinner from '../spinner';
 import { selectCurrentTable } from 'store/selectors/table';
 

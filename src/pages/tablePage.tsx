@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
-import { useGetTablesDataByUserQuery } from "api/table.service.";
+import { useGetTablesDataByUserQuery } from "api/table.service";
 import Spinner from "components/spinner";
 import Table from "components/table";
 import { RootState } from "store/store";
@@ -75,7 +75,7 @@ export default function TablePage() {
         aria-label="Create new table"
         onClick={handleCreateTable}
       >
-        Create table
+        Create new table
       </button>
       <TabContext value={activeTab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -102,7 +102,7 @@ export default function TablePage() {
               aria-label="Create new table"
               onClick={handleCreateTable}
           >
-              Create table
+              Create new table
           </button>
       </div>
     }
