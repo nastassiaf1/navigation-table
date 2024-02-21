@@ -1,4 +1,5 @@
 import { useForm, useFieldArray } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,6 +17,7 @@ interface NewTable {
 
 export default function AddTableDialog({ onClose, userId }: { onClose: () => void, userId: string }) {
     const [addTable] = useAddTableMutation();
+    const navigate = useNavigate();
     const { register, control, handleSubmit, watch } = useForm<NewTable>({
         defaultValues: {
             columns: [{ name: "" }]
@@ -39,13 +41,14 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
             filter(name => name.trim() !== '');
 
         const tableData = {
-            id: uuidv4(),
+            id: uuidv4(), // id on the client side, since we are simulating a server
             name: data.tableName,
             userId,
             columns
         }
 
         await addTable(tableData);
+        navigate(`/table/${tableData.id}`, { replace: true });
 
         onClose();
     };

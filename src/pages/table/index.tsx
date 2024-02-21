@@ -45,7 +45,7 @@ export default function TablePage() {
     } else if (tableData && tableData.length > 0) {
       navigate(`/table/${tableData[0].id}`, { replace: true });
     }
-  }, [tableId, tableData, dispatch]);
+  }, [tableId, tableData]);
 
   const handleCreateTable = () => {
     setIsDialogOpened(true);
