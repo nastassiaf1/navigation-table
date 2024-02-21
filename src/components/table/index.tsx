@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useRemoveTableMutation, useUpdateTableMutation } from '../../api/table.service';
 import { RowTable, Table } from 'interfaces/table';
@@ -48,7 +47,7 @@ export default function Table({ data }: { data: Table }) {
             {data.columns.map((columnName) => (
               <th key={columnName}>{columnName}</th>
             ))}
-            <th>
+            <th className={styles.deleteButtonWrapper}>
               <IconButton
                   className="deleteButton"
                   aria-label={`Remove Table ${data.name}`}

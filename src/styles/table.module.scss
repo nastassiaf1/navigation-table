@@ -50,18 +50,18 @@
 }
 
 .addbutton {
-    margin: auto;
+    margin: 0 auto 12px auto;
     padding: 8px 12px;
     display: block;
     font-size: 16px;
     color: #fff;
-    background-color: #ab6d80;
+    background-color: rgb(180, 81, 111);
     border: initial;
     border-radius: 4px;
     cursor: pointer;
 
     &:hover {
-        background-color: #ab6d808f;
+        background-color: rgba(180, 81, 111, 0.6);
     }
 }
 
@@ -87,5 +87,13 @@
 
     &:hover {
         background-color: #fff;
+    }
+}
+
+.deleteButtonWrapper {
+    border-left: 1px solid #f1f1f1;
+
+    button {
+        border-radius: 4px;
     }
 }
