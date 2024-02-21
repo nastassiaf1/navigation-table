@@ -32,8 +32,28 @@ export const tableApi = createApi({
                 }
             },
         }),
-        getTableData: builder.query<Table[], void>({
-            query: () => 'data',
+        removeTable: builder.mutation<Table, string>({
+            query: (tableId) => ({
+                url: `table/${tableId}`,
+                method: 'DELETE',
+            }),
+            async onQueryStarted(_data, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    dispatch(
+                        tableApi.util.updateQueryData('getTablesDataByUser', data.userId, (draft) => {
+                            const index = draft.findIndex(n => n.id === data.id);
+
+                            if (index !== -1) {
+                                draft.splice(index, 1);
+                            }
+                        })
+                    )
+                } catch(error) {
+                    throw new Error((error as Error).message);
+                }
+            },
         }),
         updateTable: builder.mutation<Table, Table>({
             query: (table) => ({
@@ -59,44 +79,12 @@ export const tableApi = createApi({
                 }
             },
         }),
-        removeTableRow: builder.mutation<Table, string>({
-            query: (id) => ({
-                url: `data/${id}`,
-                method: 'DELETE',
-            }),
-            async onQueryStarted(_id, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-
-                    dispatch(
-                        tableApi.util.updateQueryData('getTableData', undefined, (draft) => {
-                            const index = draft.findIndex(n => n.id === data.id);
-
-                            if (index !== -1) {
-                                draft.splice(index, 1);
-                            }
-                        })
-                    )
-                } catch(error) {
-                    throw new Error((error as Error).message);
-                }
-            },
-        }),
     }),
 });
-
-export const selectUserById = createSelector(
-    [state => state, (_, params) => params],
-    (state, userId) => {
-        const users = tableApi.endpoints.getTableData.select()(state)?.data;
-        return users ? users.find(({ id }) => id === userId ) : null;
-    }
-)
 
 export const {
     useGetTablesDataByUserQuery,
     useAddTableMutation,
-    useGetTableDataQuery,
-    useUpdateTableMutation,
-    useRemoveTableRowMutation
+    useRemoveTableMutation,
+    useUpdateTableMutation
 } = tableApi;

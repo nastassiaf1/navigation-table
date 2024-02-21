@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { useUpdateTableMutation } from '../../api/table.service.';
+import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useRemoveTableMutation, useUpdateTableMutation } from '../../api/table.service.';
 import { RowTable, Table } from 'interfaces/table';
 import AddRowDialog from './addRowDialog';
 import EditRowDialog from './editRowDialog';
@@ -11,6 +15,8 @@ export default function Table({ data }: { data: Table }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingRow, setEditingRow] = useState<RowTable | null>(null);
+  const [removeTable] = useRemoveTableMutation();
+  const navigate = useNavigate();
 
   const openEditModal = (row: RowTable) => {
     setEditingRow(row);
@@ -24,7 +30,14 @@ export default function Table({ data }: { data: Table }) {
       ...data,
       rows: data.rows!.filter(row => row.id !== rowId)
     };
+
     await updateTable(updatedTable);
+  }
+
+  async function onDeleteTable(id: string) {
+    await removeTable(id);
+
+    navigate('/table');
   }
 
   return (
@@ -35,7 +48,15 @@ export default function Table({ data }: { data: Table }) {
             {data.columns.map((columnName) => (
               <th key={columnName}>{columnName}</th>
             ))}
-            { !!data.rows?.length && <th></th> }
+            <th>
+              <IconButton
+                  className="deleteButton"
+                  aria-label={`Remove Table ${data.name}`}
+                  onClick={() => onDeleteTable(data.id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -52,7 +73,7 @@ export default function Table({ data }: { data: Table }) {
               </tr>
             )) :
             <tr className={styles.description}>
-              <td colSpan={data.columns.length}>No data found in the table</td>
+              <td colSpan={data.columns.length + 1}>No data found in the table</td>
             </tr>
           }
         </tbody>

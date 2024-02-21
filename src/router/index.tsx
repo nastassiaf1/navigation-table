@@ -3,7 +3,7 @@ import App from "../App";
 import ErrorPage from "../pages/errorPage";
 import About from "../pages/about";
 import Preview from "../components/preview";
-import Table from "../pages/table/tablePage";
+import Table from "../pages/tablePage";
 import RequireAuth from "./guards/table";
 
 const router = createBrowserRouter([

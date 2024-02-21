@@ -12,7 +12,7 @@ import { setCurrentTable } from 'store/slices/currentTable.slice';
 import ModalDialogPortal from "components/modalDialogPortal";
 import AddTableDialog from "components/table/addTableDialog";
 
-import styles from "./../../styles/table.module.scss";
+import styles from "./../styles/table.module.scss";
 
 export default function TablePage() {
   const [isDialogOpened, setIsDialogOpened] = useState(false);
