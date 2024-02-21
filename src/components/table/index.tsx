@@ -7,12 +7,14 @@ import { RowTable, Table } from 'interfaces/table';
 import AddRowDialog from './addRowDialog';
 import EditRowDialog from './editRowDialog';
 import ModalDialogPortal from './../modalDialogPortal';
+import DeleteConfirmationDialog from './deleteConfirmationDialog';
 
 import styles from './../../styles/table.module.scss';
 
 export default function Table({ data }: { data: Table }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [editingRow, setEditingRow] = useState<RowTable | null>(null);
   const [removeTable] = useRemoveTableMutation();
   const navigate = useNavigate();
@@ -39,6 +41,19 @@ export default function Table({ data }: { data: Table }) {
     navigate('/table');
   }
 
+  const showDeleteDialog = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const hideDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+  };
+
+  const confirmDeleteTable = async () => {
+    await onDeleteTable(data.id);
+    hideDeleteDialog();
+  };
+
   return (
     <div className={styles.tablewrapper}>
       <table className={styles.table}>
@@ -51,7 +66,7 @@ export default function Table({ data }: { data: Table }) {
               <IconButton
                   className="deleteButton"
                   aria-label={`Remove Table ${data.name}`}
-                  onClick={() => onDeleteTable(data.id)}
+                  onClick={() => showDeleteDialog()}
               >
                 <DeleteIcon />
               </IconButton>
@@ -91,6 +106,11 @@ export default function Table({ data }: { data: Table }) {
           <EditRowDialog row={editingRow!} onClose={() => setIsEditModalOpen(false)} />
         </ModalDialogPortal>
       )}
+      <DeleteConfirmationDialog
+          isOpen={isDeleteDialogOpen}
+          onClose={hideDeleteDialog}
+          onConfirm={confirmDeleteTable}
+      />
     </div>
   )
 };
