@@ -21,14 +21,16 @@ Before you begin, ensure you have the following installed:
 ### Installation
 
 1. Clone the repository:
-    git clone [https://github.com/nastassiaf1/navigation-table](https://github.com/nastassiaf1/navigation-table).git
+    git clone [https://github.com/nastassiaf1/navigation-table](https://github.com/nastassiaf1/navigation-table.git).git
 2. Navigate to the project directory:
-    cd react-practice
+    cd navigation-table
 3. Install the necessary packages:
     npm install
 4. Start the development server:
     npm run dev
-5. To view the application, open http://localhost:3000 in your browser
+5. Start the local JSON server:
+    npm run start-server
+6. To view the application, open http://localhost:4000 in your browser
 
 ### Installation
 
