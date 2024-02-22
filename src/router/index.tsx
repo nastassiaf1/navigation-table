@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import App from "../App";
 import ErrorPage from "../pages/errorPage";
-import About from "../pages/about";
+import AboutPage from "../pages/aboutPage";
 import Preview from "../components/preview";
 import TablePage from "../pages/tablePage";
 import UserPage from "../pages/userPage";
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
                 },
                 {
                     path: "/about",
-                    element: <About />,
+                    element: <AboutPage />,
                 },
                 {
                     path: "/table/:tableId?",
