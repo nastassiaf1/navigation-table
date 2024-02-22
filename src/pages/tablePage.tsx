@@ -7,7 +7,7 @@ import { TabPanel, TabContext, TabList } from '@mui/lab';
 import { useGetTablesDataByUserQuery } from "api/table.service";
 import Spinner from "components/spinner";
 import Table from "components/table";
-import { RootState } from "store/store";
+import { selectCurrentUser } from "store/selectors/user";
 import { setCurrentTable } from 'store/slices/currentTable.slice';
 import ModalDialogPortal from "components/modalDialogPortal";
 import AddTableDialog from "components/table/addTableDialog";
@@ -17,7 +17,7 @@ import styles from "./../styles/table.module.scss";
 export default function TablePage() {
   const [isDialogOpened, setIsDialogOpened] = useState(false);
   const [activeTab, setActiveTab] = useState('');
-  const user = useSelector((state: RootState) => state.user.currentUser);
+  const user = useSelector(selectCurrentUser);
   const location = useLocation();
   const navigate = useNavigate();
   const { tableId } = useParams();

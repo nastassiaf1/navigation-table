@@ -3,7 +3,8 @@ import App from "../App";
 import ErrorPage from "../pages/errorPage";
 import About from "../pages/about";
 import Preview from "../components/preview";
-import Table from "../pages/tablePage";
+import TablePage from "../pages/tablePage";
+import UserPage from "../pages/userPage";
 import RequireAuth from "./guards/table";
 
 const router = createBrowserRouter([
@@ -27,11 +28,18 @@ const router = createBrowserRouter([
                     path: "/table/:tableId?",
                     element: (
                         <RequireAuth>
-                            <Table />
+                            <TablePage />
                         </RequireAuth>
                     ),
                 },
-
+                {
+                    path: "/user/:userId",
+                    element: (
+                        <RequireAuth>
+                            <UserPage />
+                        </RequireAuth>
+                    ),
+                },
                 { path: "login", element: <Outlet /> },
                 { path: "registration", element: <Outlet /> },
               ]
