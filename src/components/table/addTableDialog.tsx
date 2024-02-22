@@ -8,9 +8,14 @@ import uuidv4 from 'utils/uuid';
 
 import formStyle from './../../styles/form.module.scss';
 
+enum NewTableFieldsName {
+    COLUMNS = 'columns',
+    TABLE_NAME = 'tableName'
+}
+
 interface NewTable {
-    tableName: string;
-    columns: {
+    [NewTableFieldsName.TABLE_NAME]: string;
+    [NewTableFieldsName.COLUMNS]: {
         name: string
     }[]
 }
@@ -20,17 +25,21 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
     const navigate = useNavigate();
     const { register, control, handleSubmit, watch } = useForm<NewTable>({
         defaultValues: {
-            columns: [{ name: "" }]
+            [NewTableFieldsName.COLUMNS]: [{ name: "" }],
+            [NewTableFieldsName.TABLE_NAME]: ""
         }
     });
     const { fields, append, remove } = useFieldArray({
         control,
-        name: "columns"
+        name: NewTableFieldsName.COLUMNS
     });
 
-    const columnNames = watch("columns");
+    const columnNames = watch(NewTableFieldsName.COLUMNS);
+    const tableName = watch(NewTableFieldsName.TABLE_NAME);
 
-    const isSaveButtonDisabled = fields.length === 1 || columnNames.every(column => column.name.trim() === '');
+    const isSaveButtonDisabled = fields.length === 1 ||
+        columnNames.some(column => column.name.trim() === '') ||
+        !tableName.trim().length ;
 
     const handleAddColumn = () => {
         append({ name: "" });
@@ -60,12 +69,12 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
             </IconButton>
         </div>
         <div style={{marginBottom: '30px', borderBottom: '1px solid white'}}>
-            <input {...register("tableName")} className={formStyle.input} placeholder="Table Name" aria-label="Input Table Name" />
+            <input {...register(NewTableFieldsName.TABLE_NAME)} className={formStyle.input} placeholder="Table Name" aria-label="Input Table Name" />
         </div>
         <div>
             {fields.map((field, index) => (
                 <div key={field.id} className="columnWrapper">
-                    <input {...register(`columns.${index}.name`)} className={formStyle.input} />
+                    <input {...register(`${NewTableFieldsName.COLUMNS}.${index}.name`)} className={formStyle.input} />
                     <IconButton
                         className="deleteButton"
                         aria-label="delete column"
