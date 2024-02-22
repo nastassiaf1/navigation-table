@@ -21,7 +21,7 @@ Before you begin, ensure you have the following installed:
 ### Installation
 
 1. Clone the repository:
-    git clone https://github.com/your-username/react-practice.git
+    git clone [https://github.com/nastassiaf1/navigation-table](https://github.com/nastassiaf1/navigation-table).git
 2. Navigate to the project directory:
     cd react-practice
 3. Install the necessary packages:
