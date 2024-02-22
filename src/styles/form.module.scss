@@ -82,3 +82,9 @@
         width: initial;
     }
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .form {
+        width: initial;
+    }
+}
