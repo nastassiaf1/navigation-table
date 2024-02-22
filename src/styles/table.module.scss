@@ -46,7 +46,7 @@
     font-size: 20px;
     line-height: 1.5;
     text-align: center;
-    color: #18865e;
+    color: #085b3d;
 }
 
 .addbutton {
@@ -59,9 +59,10 @@
     border: initial;
     border-radius: 4px;
     cursor: pointer;
+    transform: background-color 0.3s ease;
 
     &:hover {
-        background-color: rgba(180, 81, 111, 0.6);
+        background-color: #99445e;
     }
 }
 

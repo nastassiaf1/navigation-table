@@ -2,7 +2,12 @@
     font-size: 16px;
 
     a {
+        display: inline-block;
         margin-right: 12px;
+
+        &::first-letter {
+            text-transform: uppercase;
+        }
     }
 }
 

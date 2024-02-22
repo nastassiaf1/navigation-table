@@ -14,14 +14,17 @@ body {
 
 a {
     text-decoration: none;
-    color: #E27D60;
+    color: #db7659;
     text-shadow: 0 0 black;
+    transition: 0.3s ease, text-shadow 0.4s ease;
 
     &:hover {
+        color: #c66c51;
         text-shadow: 1px 1px rgb(165, 40, 40);
     }
 
     &.active {
+        color: #a45139;
         text-decoration: underline;
     }
 }

@@ -10,14 +10,20 @@
         font-family: fantasy;
         font-weight: bold;
         color: #ffffff;
-        text-shadow: 0 0 black;
+        text-shadow: 0 0 rgb(25, 25, 25);
+
+        &:hover {
+            color: #f8fcfd;
+        }
     }
 
     a {
-        color: #a45139;
+        color: #c36349;
         text-shadow: initial;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
 
         &:hover {
+            color: #a45139;
             text-shadow: 0 1px #b69a9a;
         }
     }

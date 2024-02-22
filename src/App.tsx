@@ -32,7 +32,7 @@ export default function App() {
     return <>
         <header className={layoutStyle.header}>
             <h1>
-                <Link to="/">Table</Link>
+                <Link to="/">TableBY</Link>
             </h1>
             <Navigation></Navigation>
         </header>
