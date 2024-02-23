@@ -50,15 +50,15 @@ export default function AddRowDialog({ onClose }: AddRowDialogProps) {
                     <CloseIcon />
                 </IconButton>
             </div>
-            {currentTable.columns.map((column) => (
+            {currentTable.columns.map(({name, id}) => (
                 <Controller
-                    key={column}
-                    name={column}
+                    key={id}
+                    name={name}
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
                         <div className={formStyle.formitem}>
-                            <input id={column} {...field} placeholder={column} />
+                            <input id={id} {...field} placeholder={name} />
                         </div>
                     )}
                 />

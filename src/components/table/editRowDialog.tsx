@@ -54,15 +54,15 @@ export default function EditRowDialog({ row, onClose }: EditRowDialogProps) {
                 <CloseIcon />
             </IconButton>
         </div>
-        {currentTable?.columns.map(column => (
+        {currentTable?.columns.map(({ name, id }) => (
           <Controller
-            key={column}
-            name={column}
+            key={id}
+            name={name}
             control={control}
             render={({ field }) => (
               <div className={formStyle.formItem}>
-                <label className={formStyle.label} htmlFor={column}>{column}</label>
-                <input id={column} {...field} />
+                <label className={formStyle.label} htmlFor={id}>{ name }</label>
+                <input id={id} {...field} />
               </div>
             )}
           />

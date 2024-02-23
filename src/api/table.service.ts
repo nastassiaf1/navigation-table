@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { createSelector } from '@reduxjs/toolkit';
 import { Table } from '../interfaces/table';
 import { environment } from '../env/env';
 

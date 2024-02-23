@@ -46,8 +46,13 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
     };
 
     const onSubmit = async (data: NewTable) => {
-        const columns = data.columns.map(column => column.name).
-            filter(name => name.trim() !== '');
+        const columns = data.columns.map(column => {
+            return {
+                name: column.name.trim(),
+                id: uuidv4(),
+            }
+        }).
+            filter(({ name }) => name !== '');
 
         const tableData = {
             id: uuidv4(), // id on the client side, since we are simulating a server
