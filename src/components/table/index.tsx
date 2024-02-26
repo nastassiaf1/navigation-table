@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
+import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
@@ -13,15 +13,28 @@ import { RowTable, Table } from 'interfaces/table';
 import AddRowDialog from './addRowDialog';
 import EditRowDialog from './editRowDialog';
 import ModalDialogPortal from './../modalDialogPortal';
-import DeleteConfirmationDialog from './deleteConfirmationDialog';
+import ConfirmationDialog from '../confirmationDialog';
 
 import styles from './../../styles/table.module.scss';
 import uuidv4 from 'utils/uuid';
+
+enum ItemToDelete {
+  TABLE = 'table',
+  ROW = 'row',
+  COLUMN = 'column',
+}
+
+interface DataTableToDelete {
+  title?: string;
+  description?: string;
+  confirmCallback: () => void;
+}
 
 export default function Table({ data: initialData }: { data: Table }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [dataToDelete, setDataToDelete] = useState<DataTableToDelete | null>(null);
   const [editingRow, setEditingRow] = useState<RowTable | null>(null);
   const [isEditColumnMode, setIsEditColumnMode] = useState(false);
   const [data, setData] = useState(structuredClone(initialData));
@@ -45,25 +58,41 @@ export default function Table({ data: initialData }: { data: Table }) {
     };
 
     await updateTable(updatedTable);
+    hideDeleteDialog();
   }
 
-  async function onDeleteTable(id: string) {
-    await removeTable(id);
+  async function onDeleteTable() {
+    await removeTable(data.id);
 
+    hideDeleteDialog();
     navigate('/table');
   }
 
-  const showDeleteDialog = () => {
+  const showDeleteDialog = (itemToDelete: ItemToDelete, confirmCallback: () => void) => {
+    let title, description;
+
+    if (itemToDelete === ItemToDelete.TABLE || itemToDelete === ItemToDelete.COLUMN) {
+      title = 'Are you sure?';
+      description = `
+        This action cannot be undone. This will permanently delete the ${ itemToDelete } and all its data.
+      `;
+    }
+
+    if (itemToDelete === ItemToDelete.ROW) {
+      title = 'Do you really want to delete this row?';
+    }
+
+    setDataToDelete({
+      title,
+      description,
+      confirmCallback,
+    });
     setIsDeleteDialogOpen(true);
   };
 
   const hideDeleteDialog = () => {
+    setDataToDelete(null);
     setIsDeleteDialogOpen(false);
-  };
-
-  const confirmDeleteTable = async () => {
-    await onDeleteTable(data.id);
-    hideDeleteDialog();
   };
 
   const handleAddColumn = () => {
@@ -87,6 +116,7 @@ export default function Table({ data: initialData }: { data: Table }) {
     const updatedColumns = data.columns.filter(({ id }) => columnId !== id);
 
     setData({ ...data, rows: updatedRows || [], columns: updatedColumns });
+    hideDeleteDialog();
   };
 
   const handleChangeColumnName = (columnId: string, newName: string) => {
@@ -130,7 +160,10 @@ export default function Table({ data: initialData }: { data: Table }) {
                 />
               </Tooltip>
               <Tooltip title="Delete Column">
-                <IconButton aria-label={`Delete ${name} column`} onClick={() => handleDeleteColumn(id)}>
+                <IconButton
+                  aria-label={`Delete ${name} column`}
+                  onClick={() => showDeleteDialog(ItemToDelete.COLUMN, () => handleDeleteColumn(id))}
+                >
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>
@@ -144,7 +177,7 @@ export default function Table({ data: initialData }: { data: Table }) {
             </Tooltip>
             <Tooltip title="Save changes">
               <IconButton aria-label="Save changes" onClick={ handleSaveColumns }>
-                <SaveIcon />
+                <CheckIcon />
               </IconButton>
             </Tooltip>
             <Tooltip title="Cancel changes">
@@ -160,7 +193,7 @@ export default function Table({ data: initialData }: { data: Table }) {
         <>
           {
             data.columns.map(({ name, id }) => (
-              <Tooltip title={ name }>
+              <Tooltip title={ name } key={ id }>
                 <th key={ id } className={styles.column}>{ name }</th>
               </Tooltip>
             ))
@@ -170,7 +203,7 @@ export default function Table({ data: initialData }: { data: Table }) {
               <IconButton
                 className="deleteButton"
                 aria-label={`Remove Table ${data.name}`}
-                onClick={() => showDeleteDialog()}
+                onClick={() => showDeleteDialog(ItemToDelete.TABLE, () => onDeleteTable())}
               >
                 <DeleteIcon />
               </IconButton>
@@ -214,7 +247,13 @@ export default function Table({ data: initialData }: { data: Table }) {
                     <button className={styles.button} aria-label="Edit Row" onClick={() => openEditModal(row)}>Edit</button>
                   </Tooltip>
                   <Tooltip title="Delete Row">
-                    <button className={`${styles.button} ${styles.deletebutton}`} aria-label="Delete Row" onClick={() => onDeleteRow(row.id)}>Delete</button>
+                    <button
+                      className={`${styles.button} ${styles.deletebutton}`}
+                      aria-label="Delete Row"
+                      onClick={() => showDeleteDialog(ItemToDelete.ROW, () => onDeleteRow(row.id))}
+                    >
+                      Delete
+                    </button>
                   </Tooltip>
                 </td>
               </tr>
@@ -239,10 +278,12 @@ export default function Table({ data: initialData }: { data: Table }) {
           <EditRowDialog row={editingRow!} onClose={() => setIsEditModalOpen(false)} />
         </ModalDialogPortal>
       )}
-      <DeleteConfirmationDialog
+      <ConfirmationDialog
           isOpen={isDeleteDialogOpen}
           onClose={hideDeleteDialog}
-          onConfirm={confirmDeleteTable}
+          title={dataToDelete?.title}
+          description={dataToDelete?.description}
+          onConfirm={dataToDelete?.confirmCallback}
       />
     </div>
   )

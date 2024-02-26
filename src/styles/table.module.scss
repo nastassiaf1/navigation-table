@@ -42,6 +42,10 @@ $column-side-padding: 18px;
         max-width: initial;
         background-color: #06bf8e38;
     }
+
+    button {
+        transition: background-color 0.3s;
+    }
 }
 
 .description {
@@ -67,7 +71,7 @@ $column-side-padding: 18px;
     border: initial;
     border-radius: 4px;
     cursor: pointer;
-    transform: background-color 0.3s ease;
+    transition: background-color 0.3s;
 
     &:hover {
         background-color: #99445e;
@@ -83,6 +87,7 @@ $column-side-padding: 18px;
     border: 1px solid #f0f8ff38;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
 
     &:hover {
         background-color: #f0f8ff38;

@@ -1,33 +1,39 @@
 import ModalDialogPortal from "components/modalDialogPortal";
 
-import tableStyle from './../../styles/table.module.scss';
+import tableStyle from './../styles/table.module.scss';
 
-interface DeleteConfirmationDialogProps {
+interface ConfirmationDialogProps {
     isOpen: boolean,
     onClose: () => void,
-    onConfirm: () => void
+    onConfirm?: () => void,
+    title?: string,
+    description?: string,
 }
 
-export default function DeleteConfirmationDialog({ isOpen, onClose, onConfirm }: DeleteConfirmationDialogProps) {
+export default function ConfirmationDialog({ isOpen, onClose, onConfirm, title, description}: ConfirmationDialogProps) {
     if (!isOpen) return null;
 
     return (
       <ModalDialogPortal>
         <div>
-          <h2>Are you sure?</h2>
-          <p>This action cannot be undone. This will permanently delete the table and all its data.</p>
+          {
+            title ? <h2>{ title }</h2> : null
+          }
+          {
+            description ? <p>{ description }</p> : null
+          }
           <div>
             <button
                 className={tableStyle.button}
                 onClick={onClose}
             >
-                Cancel
+              Cancel
             </button>
             <button
                 className={`${tableStyle.button} ${tableStyle.deletebutton}`}
                 onClick={onConfirm}
             >
-                Delete
+              Confirm
             </button>
           </div>
         </div>
