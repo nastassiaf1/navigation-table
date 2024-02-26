@@ -1,3 +1,5 @@
+$column-side-padding: 18px;
+
 .tablewrapper {
     display: flex;
     flex-direction: column;
@@ -29,10 +31,15 @@
 
     th,
     td {
-        padding: 8px 18px;
+        padding: 8px $column-side-padding;
+        max-width: 100px;
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
     }
 
     tr td:last-child {
+        max-width: initial;
         background-color: #06bf8e38;
     }
 }
@@ -92,10 +99,27 @@
     }
 }
 
-.deleteButtonWrapper {
+.actionWrapper {
+    max-width: initial;
     border-left: 1px solid #f1f1f1;
 
     button {
         border-radius: 4px;
+    }
+}
+
+.column {
+    &Editing {
+        position: relative;
+
+        input {
+            padding-right: 40px;
+            text-overflow: ellipsis;
+        }
+
+        button {
+            position: absolute;
+            right: $column-side-padding;
+        }
     }
 }

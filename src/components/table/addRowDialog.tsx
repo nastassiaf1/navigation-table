@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Tooltip from '@mui/material/Tooltip';
 import uuidv4 from 'utils/uuid';
 import { useUpdateTableMutation } from '../../api/table.service';
 import Spinner from '../spinner';
@@ -46,9 +47,11 @@ export default function AddRowDialog({ onClose }: AddRowDialogProps) {
     return (
         <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={formStyle.cancelbutton}>
-                <IconButton aria-label="close create table modal" onClick={onClose}>
+            <Tooltip title="Close Modal">
+                <IconButton aria-label="Close Create Table Modal" onClick={onClose}>
                     <CloseIcon />
                 </IconButton>
+            </Tooltip>
             </div>
             {currentTable.columns.map(({name, id}) => (
                 <Controller

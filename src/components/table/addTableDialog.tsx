@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Tooltip from '@mui/material/Tooltip';
 import { useAddTableMutation } from 'api/table.service';
 import uuidv4 from 'utils/uuid';
 
@@ -69,9 +70,11 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
 
     return <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={formStyle.cancelbutton}>
-            <IconButton aria-label="close create table modal" onClick={onClose}>
-                <CloseIcon />
-            </IconButton>
+            <Tooltip title="Close Modal">
+                <IconButton aria-label="close create table modal" onClick={onClose}>
+                    <CloseIcon />
+                </IconButton>
+            </Tooltip>
         </div>
         <div style={{marginBottom: '30px', borderBottom: '1px solid white'}}>
             <input {...register(NewTableFieldsName.TABLE_NAME)} className={formStyle.input} placeholder="Table Name" aria-label="Input Table Name" />
@@ -80,13 +83,16 @@ export default function AddTableDialog({ onClose, userId }: { onClose: () => voi
             {fields.map((field, index) => (
                 <div key={field.id} className="columnWrapper">
                     <input {...register(`${NewTableFieldsName.COLUMNS}.${index}.name`)} className={formStyle.input} />
-                    <IconButton
-                        className="deleteButton"
-                        aria-label="delete column"
-                        onClick={() => remove(index)}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="Delete Column">
+                        <IconButton
+                            className="deleteButton"
+                            aria-label="Delete Column"
+                            onClick={() => remove(index)}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+
                 </div>
             ))}
         </div>

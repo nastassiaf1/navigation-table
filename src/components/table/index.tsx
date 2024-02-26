@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import { TextField } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 import { useRemoveTableMutation, useUpdateTableMutation } from '../../api/table.service';
 import { RowTable, Table } from 'interfaces/table';
 import AddRowDialog from './addRowDialog';
@@ -120,27 +121,37 @@ export default function Table({ data: initialData }: { data: Table }) {
       return (
         <>
           {data.columns.map(({ name, id }) => (
-            <th key={id}>
-              <TextField
-                defaultValue={name}
-                onBlur={(e) => handleChangeColumnName(id, e.target.value)}
-                size="small"
-              />
-              <IconButton onClick={() => handleDeleteColumn(id)}>
-                <DeleteIcon />
-              </IconButton>
+            <th key={id} className={styles.columnEditing}>
+              <Tooltip title={name}>
+                <TextField
+                  defaultValue={name}
+                  onBlur={(e) => handleChangeColumnName(id, e.target.value)}
+                  size="small"
+                />
+              </Tooltip>
+              <Tooltip title="Delete Column">
+                <IconButton aria-label={`Delete ${name} column`} onClick={() => handleDeleteColumn(id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
             </th>
           ))}
-          <th>
-            <IconButton onClick={ handleAddColumn }>
-              <AddIcon />
-            </IconButton>
-            <IconButton onClick={ handleSaveColumns }>
-              <SaveIcon />
-            </IconButton>
-            <IconButton onClick={ handleResetColumns }>
-              <CloseIcon />
-            </IconButton>
+          <th className={styles.actionWrapperEditing}>
+            <Tooltip title="Add new column">
+              <IconButton aria-label="Add new column" onClick={ handleAddColumn }>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Save changes">
+              <IconButton aria-label="Save changes" onClick={ handleSaveColumns }>
+                <SaveIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Cancel changes">
+              <IconButton aria-label="Cancel changes" onClick={ handleResetColumns }>
+                <CloseIcon />
+              </IconButton>
+            </Tooltip>
           </th>
         </>
       );
@@ -149,24 +160,30 @@ export default function Table({ data: initialData }: { data: Table }) {
         <>
           {
             data.columns.map(({ name, id }) => (
-              <th key={ id }>{ name }</th>
+              <Tooltip title={ name }>
+                <th key={ id } className={styles.column}>{ name }</th>
+              </Tooltip>
             ))
           }
-          <th className={styles.deleteButtonWrapper}>
-            <IconButton
-              className="deleteButton"
-              aria-label={`Remove Table ${data.name}`}
-              onClick={() => showDeleteDialog()}
-            >
-              <DeleteIcon />
-            </IconButton>
-            <IconButton
-              className="editButton"
-              aria-label={`Edit Table ${data.name}`}
-              onClick={() => setIsEditColumnMode(true)}
-            >
-              <EditIcon />
-            </IconButton>
+          <th className={styles.actionWrapper}>
+            <Tooltip title="Remove Table">
+              <IconButton
+                className="deleteButton"
+                aria-label={`Remove Table ${data.name}`}
+                onClick={() => showDeleteDialog()}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Edit Table">
+              <IconButton
+                className="editButton"
+                aria-label={`Edit Table ${data.name}`}
+                onClick={() => setIsEditColumnMode(true)}
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
           </th>
         </>
       );
@@ -188,11 +205,17 @@ export default function Table({ data: initialData }: { data: Table }) {
             data.rows?.length ? data.rows.map((row) => (
               <tr key={row.id}>
                 {data.columns.map(({ name }) => (
-                  <td key={`${row.id}-${name}`}>{row[name]}</td>
+                  <Tooltip title={`${row[name]}`}>
+                    <td key={`${row.id}-${name}`}>{row[name]}</td>
+                  </Tooltip>
                 ))}
                 <td>
-                  <button className={styles.button} aria-label="Edit row" onClick={() => openEditModal(row)}>Edit</button>
-                  <button className={`${styles.button} ${styles.deletebutton}`} aria-label="Delete row" onClick={() => onDeleteRow(row.id)}>Delete</button>
+                  <Tooltip title="Edit Row">
+                    <button className={styles.button} aria-label="Edit Row" onClick={() => openEditModal(row)}>Edit</button>
+                  </Tooltip>
+                  <Tooltip title="Delete Row">
+                    <button className={`${styles.button} ${styles.deletebutton}`} aria-label="Delete Row" onClick={() => onDeleteRow(row.id)}>Delete</button>
+                  </Tooltip>
                 </td>
               </tr>
             )) :
@@ -202,7 +225,7 @@ export default function Table({ data: initialData }: { data: Table }) {
           }
         </tbody>
       </table>
-      <button className={styles.button} aria-label="Add new row" onClick={() => setIsAddModalOpen(true)}>
+      <button className={styles.button} aria-label="Add New Row" onClick={() => setIsAddModalOpen(true)}>
         Add New Row
       </button>
 

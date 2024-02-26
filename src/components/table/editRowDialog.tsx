@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Tooltip from '@mui/material/Tooltip';
 import { useUpdateTableMutation } from '../../api/table.service';
 import { selectCurrentTable } from 'store/selectors/table';
 import { RowTable } from 'interfaces/table';
@@ -50,9 +51,11 @@ export default function EditRowDialog({ row, onClose }: EditRowDialogProps) {
     return (
       <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={formStyle.cancelbutton}>
-            <IconButton aria-label="close create table modal" onClick={onClose}>
+          <Tooltip title="Close Modal">
+            <IconButton aria-label="Close Create Table Modal" onClick={onClose}>
                 <CloseIcon />
             </IconButton>
+          </Tooltip>
         </div>
         {currentTable?.columns.map(({ name, id }) => (
           <Controller

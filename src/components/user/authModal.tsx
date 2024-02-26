@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Tooltip from '@mui/material/Tooltip';
 import LoginForm from './loginForm';
 import RegistrationForm from './registrationForm';
 
@@ -24,9 +25,11 @@ export default function AuthModal() {
 
     return (
         <div className="modal">
-            <IconButton aria-label="close auth modal" onClick={handleClose}>
-                <CloseIcon />
-            </IconButton>
+            <Tooltip title="Close Modal">
+                <IconButton aria-label="Close auth modal" onClick={handleClose}>
+                    <CloseIcon />
+                </IconButton>
+            </Tooltip>
             <TabContext value={currentTab}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="login form tabs" centered>
