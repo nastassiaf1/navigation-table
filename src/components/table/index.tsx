@@ -125,9 +125,14 @@ export default function Table({ data: initialData }: { data: Table }) {
     const updatedColumnIndex = columnsToUpdate.findIndex(({ id }) => id === columnId);
 
     if (updatedColumnIndex !== -1) {
+      const nameToUpdate = columnsToUpdate[updatedColumnIndex].name.trim();
+      const _newName = newName.trim();
+
+      if (!_newName || nameToUpdate === _newName) return;
+
       rowsToUpdate?.forEach(row => {
-        row[newName] = row[columnsToUpdate[updatedColumnIndex].name];
-        delete row[columnsToUpdate[updatedColumnIndex].name]
+        row[_newName] = row[nameToUpdate];
+        delete row[nameToUpdate]
       })
 
       columnsToUpdate[updatedColumnIndex].name = newName;
