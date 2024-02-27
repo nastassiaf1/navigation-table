@@ -14,9 +14,9 @@ import AddRowDialog from './addRowDialog';
 import EditRowDialog from './editRowDialog';
 import ModalDialogPortal from './../modalDialogPortal';
 import ConfirmationDialog from '../confirmationDialog';
+import uuidv4 from 'utils/uuid';
 
 import styles from './../../styles/table.module.scss';
-import uuidv4 from 'utils/uuid';
 
 enum ItemToDelete {
   TABLE = 'table',
@@ -174,7 +174,7 @@ export default function Table({ data: initialData }: { data: Table }) {
               </Tooltip>
             </th>
           ))}
-          <th className={styles.actionWrapperEditing}>
+          <th className={styles.actionWrapper}>
             <Tooltip title="Add new column">
               <IconButton aria-label="Add new column" onClick={ handleAddColumn }>
                 <AddIcon />

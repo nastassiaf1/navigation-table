@@ -105,8 +105,9 @@ $column-side-padding: 18px;
 }
 
 .actionWrapper {
-    max-width: initial;
+    max-width: initial !important;
     border-left: 1px solid #f1f1f1;
+    overflow: initial !important;
 
     button {
         border-radius: 4px;
