@@ -11,7 +11,7 @@ export default function TableCarousel() {
     {
         name: "Intuitive design",
         description: "Easily manage your tables",
-        imageUrl: "./../../public/images/creating.png",
+        imageUrl: "./../../public/images/table.png",
     },
     {
         name: "Create table",
@@ -21,7 +21,7 @@ export default function TableCarousel() {
     {
         name: "Edit table",
         description: "Easily edit your tables",
-        imageUrl: "./../../public/images/creating.png",
+        imageUrl: "./../../public/images/editing.png",
     },
   ];
 
