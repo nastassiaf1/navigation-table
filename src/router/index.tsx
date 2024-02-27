@@ -5,6 +5,7 @@ import AboutPage from "../pages/aboutPage";
 import Preview from "../components/preview";
 import TablePage from "../pages/tablePage";
 import UserPage from "../pages/userPage";
+import TablePreviewPage from "pages/tablePreviewPage";
 import RequireAuth from "./guards/table";
 
 const router = createBrowserRouter([
@@ -22,7 +23,21 @@ const router = createBrowserRouter([
                 },
                 {
                     path: "/about",
-                    element: <AboutPage />,
+                    element: <Outlet />,
+                    children: [
+                        {
+                            path: "",
+                            element: (
+                                <AboutPage />
+                            ),
+                        },
+                        {
+                            path: "preview",
+                            element: (
+                                <TablePreviewPage />
+                            ),
+                        },
+                    ]
                 },
                 {
                     path: "/table/:tableId?",

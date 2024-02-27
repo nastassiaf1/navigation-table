@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import style from './../styles/about.module.scss';
 
 export default function About() {
@@ -11,5 +13,9 @@ export default function About() {
             It caters to a wide array of users, from data analysts to project managers,
             enabling them to organize and manipulate data effectively.
         </p>
+        <div>
+            <span>See more in </span>
+            <Link to="./preview">Preview</Link>
+        </div>
     </div>
 }
