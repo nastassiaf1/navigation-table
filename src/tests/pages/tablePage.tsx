@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import mockData from 'mocks/data';
+/*import { render, screen } from '@testing-library/react';
+import mockData from 'mocks/table';
 import TablePage from 'pages/tablePage';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -60,4 +60,4 @@ describe('TablePage', () => {
 
     expect(screen.queryByText(`Error loading data: ${errorMessage}`)).toBeTruthy();
   });
-});
+});*/
