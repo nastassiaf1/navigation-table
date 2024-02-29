@@ -1,7 +1,5 @@
 import { renderHook, waitFor, act } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import mockTables from 'mocks/table';
 import {
     useGetTablesDataByUserQuery,
@@ -12,12 +10,9 @@ import {
 import store from 'store/store';
 import { Table } from 'interfaces/table';
 import mockUsers from 'mocks/user';
+import wrapper from 'tests/utils/testProvidersWrapper';
 
 fetchMock.enableMocks();
-
-const wrapper = ({ children }: any) => {
-    return <Provider store={store}><BrowserRouter>{children}</BrowserRouter></Provider>;
-};
 
 beforeAll((): void => {
     fetchMock.resetMocks();

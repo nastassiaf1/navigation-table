@@ -1,18 +1,12 @@
 import { renderHook, waitFor, act } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { useGetUserByNameAndPasswordQuery, useRegisterUserMutation } from 'api/user.service';
-import store from 'store/store';
 import mockUsers from 'mocks/user';
 import { User } from 'interfaces/user';
 import { UserRole } from 'constants/user.enum';
+import wrapper from 'tests/utils/testProvidersWrapper';
 
 fetchMock.enableMocks();
-
-const wrapper = ({ children }: any) => {
-    return <Provider store={store}><BrowserRouter>{children}</BrowserRouter></Provider>;
-};
 
 beforeAll((): void => {
     fetchMock.resetMocks();
