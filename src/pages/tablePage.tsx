@@ -16,7 +16,6 @@ import styles from "./../styles/table.module.scss";
 
 export default function TablePage() {
   const [isDialogOpened, setIsDialogOpened] = useState(false);
-  const [activeTab, setActiveTab] = useState('');
   const user = useSelector(selectCurrentUser);
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,6 +32,7 @@ export default function TablePage() {
   if (!user) return <Spinner />;
 
   const { data: tableData, isLoading } = useGetTablesDataByUserQuery(user.id);
+  const [activeTab, setActiveTab] = useState(tableData?.[0]?.id || '');
 
   useEffect(() => {
     if (tableId && tableData) {
