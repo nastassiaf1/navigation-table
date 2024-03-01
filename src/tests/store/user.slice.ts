@@ -8,13 +8,13 @@ describe('userSlice', () => {
         store.dispatch(setUser(user));
 
         const state = store.getState().user;
-        expect(state.currentUser).toEqual(user);
+        expect(state!.currentUser).toEqual(user);
     });
 
     it('should clear the current user on logout', () => {
         store.dispatch(logoutUser());
 
         const state = store.getState().user;
-        expect(state.currentUser).toBeNull();
+        expect(state!.currentUser).toBeNull();
     });
 });
