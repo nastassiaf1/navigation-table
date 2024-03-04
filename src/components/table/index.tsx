@@ -38,6 +38,7 @@ export default function Table({ data: initialData }: { data: Table }) {
   const [editingRow, setEditingRow] = useState<RowTable | null>(null);
   const [isEditColumnMode, setIsEditColumnMode] = useState(false);
   const [data, setData] = useState(structuredClone(initialData));
+  console.log(useUpdateTableMutation())
   const [updateTable] = useUpdateTableMutation();
   const [removeTable] = useRemoveTableMutation();
   const navigate = useNavigate();
