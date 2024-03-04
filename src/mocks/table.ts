@@ -32,4 +32,12 @@ const mockTables: Table[] = [
     { id: '2', name: 'Test 2', columns: [], rows: [], userId: mockUsers[0].id },
 ];
 
+export const mockTableData = {
+    id: 'table1',
+    name: 'Table 1',
+    columns: [{ id: 'column1', name: 'Column 1' }],
+    rows: [{ id: 'row1', 'Column 1': 'Row 1 Value' }],
+    userId: mockUsers[0].id
+}
+
 export default mockTables;
