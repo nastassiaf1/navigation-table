@@ -1,6 +1,6 @@
 import store from 'store/store';
 import { setUser, logoutUser } from 'store/slices/user.slice';
-import mockUsers from 'mocks/user';
+import mockUsers from 'tests/mocks/user';
 
 describe('userSlice', () => {
     it('should set the current user', () => {

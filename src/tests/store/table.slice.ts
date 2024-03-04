@@ -1,4 +1,4 @@
-import mockTables from 'mocks/table';
+import mockTables from 'tests/mocks/table';
 import store from 'store/store';
 import { setCurrentTable, clearCurrentTable } from 'store/slices/currentTable.slice';
 

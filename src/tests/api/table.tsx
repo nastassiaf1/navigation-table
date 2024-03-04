@@ -1,6 +1,6 @@
 import { renderHook, waitFor, act } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
-import mockTables from 'mocks/table';
+import mockTables from 'tests/mocks/table';
 import {
     useGetTablesDataByUserQuery,
     useAddTableMutation,
@@ -9,7 +9,7 @@ import {
 } from 'api/table.service';
 import store from 'store/store';
 import { Table } from 'interfaces/table';
-import mockUsers from 'mocks/user';
+import mockUsers from 'tests/mocks/user';
 import wrapper from 'tests/utils/testProvidersWrapper';
 
 fetchMock.enableMocks();

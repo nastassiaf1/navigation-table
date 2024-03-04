@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Navigation from "components/navigation";
 import { MemoryRouter } from "react-router-dom";
-import mockUsers from "mocks/user";
+import mockUsers from "tests/mocks/user";
 import '@testing-library/jest-dom';
 
 const pathname = '/mock-path';

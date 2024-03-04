@@ -1,7 +1,7 @@
 import { renderHook, waitFor, act } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
 import { useGetUserByNameAndPasswordQuery, useRegisterUserMutation } from 'api/user.service';
-import mockUsers from 'mocks/user';
+import mockUsers from 'tests/mocks/user';
 import { User } from 'interfaces/user';
 import { UserRole } from 'constants/user.enum';
 import wrapper from 'tests/utils/testProvidersWrapper';

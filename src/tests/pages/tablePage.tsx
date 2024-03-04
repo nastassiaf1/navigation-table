@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
-import mockTables from 'mocks/table';
+import mockTables from 'tests/mocks/table';
 import TablePage from 'pages/tablePage';
 import { Provider } from 'react-redux';
 import userReducer from 'store/slices/user.slice';
