@@ -20,7 +20,7 @@ jest.mock('api/table.service', () => ({
 jest.mock('redux', () => ({
     useSelector: () => mockSelector,
 }));
-jest.mock('utils/uuid', () => 'uuid-mock');
+jest.mock('utils/uuid', () => () => 'uuid-mock');
 jest.mock('components/table/addRowDialog', () => () => <div>AddRowDialog Mock</div>);
 jest.mock('components/table/editRowDialog', () => () => <div>EditRowDialog Mock</div>);
 jest.mock('components/modalDialogPortal', () => ({ children }: { children: any }) => <div>ModalDialogPortal Mock - {children}</div>);
@@ -84,5 +84,20 @@ describe('Table component', () => {
             });
         });
     });
-});
 
+    it('adds a new column on button click', () => {
+        render(
+          <BrowserRouter>
+            <Table data={mockData} />
+          </BrowserRouter>
+        );
+
+        fireEvent.click(screen.getByLabelText(`Edit Table ${mockData.name}`));
+        fireEvent.click(screen.getByLabelText('Add new column'));
+        fireEvent.click(screen.getByLabelText('Save changes'));
+
+        waitFor(() => {
+            expect(screen.getByText('Column 2')).toBeInTheDocument();
+        })
+    });
+});
