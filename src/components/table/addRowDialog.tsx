@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Tooltip from '@mui/material/Tooltip';
@@ -9,17 +9,21 @@ import Spinner from '../spinner';
 import { selectCurrentTable } from 'store/selectors/table';
 
 import formStyle from './../../styles/form.module.scss';
+import { TableColumn } from 'interfaces/table';
 
 interface AddRowDialogProps {
     onClose: () => void;
+}
+interface FormData {
+    [key: string]: string;
 }
 
 export default function AddRowDialog({ onClose }: AddRowDialogProps) {
     const currentTable = useSelector(selectCurrentTable);
     const [updateTable, { isLoading }] = useUpdateTableMutation();
-    const { control, handleSubmit, reset } = useForm();
-
-    const onSubmit = async (data) => {
+    const { control, handleSubmit, reset } = useForm<FormData>();
+    console.log('handleSubmit ', handleSubmit)
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
         if (!currentTable) {
             console.error('No current table selected');
             return;
@@ -48,12 +52,12 @@ export default function AddRowDialog({ onClose }: AddRowDialogProps) {
         <form className={formStyle.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={formStyle.cancelbutton}>
             <Tooltip title="Close Modal">
-                <IconButton aria-label="Close Create Table Modal" onClick={onClose}>
+                <IconButton aria-label="Close Add Row Modal" onClick={onClose}>
                     <CloseIcon />
                 </IconButton>
             </Tooltip>
             </div>
-            {currentTable.columns.map(({name, id}) => (
+            {currentTable.columns.map(({ name, id }: TableColumn) => (
                 <Controller
                     key={id}
                     name={name}
