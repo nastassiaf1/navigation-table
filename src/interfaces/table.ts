@@ -3,7 +3,7 @@ export type RowTable = {
     [key: string]: string
 };
 
-export type ColumnTable = {
+export type TableColumn = {
     id: string,
     name: string,
 }
@@ -12,6 +12,6 @@ export interface Table {
     id: string;
     userId: string;
     name: string;
-    columns: ColumnTable[];
+    columns: TableColumn[];
     rows?: RowTable[];
 }

@@ -6,9 +6,7 @@ jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: jest.fn(),
 }));
-jest.mock('api/table.service', () => ({
-    useAddTableMutation: jest.fn(() => [jest.fn()]),
-}));
+
 jest.mock('utils/uuid', () => () => 'uuid-mock');
 
 const mockAddTableMutation = jest.fn().mockImplementation(() => [jest.fn()]);
