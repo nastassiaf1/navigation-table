@@ -1,11 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, EnhancedStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { tableApi } from 'api/table.service';
 import { userApi } from 'api/user.service';
 import userReducer from './slices/user.slice';
 import currentTableReducer from './slices/currentTable.slice';
 
-const store = configureStore({
+const store: EnhancedStore = configureStore({
   reducer: {
     user: userReducer,
     currentTable: currentTableReducer,
