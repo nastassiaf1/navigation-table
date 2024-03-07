@@ -17,6 +17,7 @@ import ConfirmationDialog from '../confirmationDialog';
 import uuidv4 from 'utils/uuid';
 
 import styles from './../../styles/table.module.scss';
+import Filter from 'components/filter';
 
 enum ItemToDelete {
   TABLE = 'table',
@@ -230,6 +231,7 @@ export default function Table({ data: initialData }: { data: Table }) {
 
   return (
     <div className={styles.tablewrapper}>
+      <Filter data={initialData} setData={setData}  />
       <table className={styles.table}>
         <thead>
           <tr>
