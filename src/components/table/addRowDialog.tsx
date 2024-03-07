@@ -22,7 +22,7 @@ export default function AddRowDialog({ onClose }: AddRowDialogProps) {
     const currentTable = useSelector(selectCurrentTable);
     const [updateTable, { isLoading }] = useUpdateTableMutation();
     const { control, handleSubmit, reset } = useForm<FormData>();
-    console.log('handleSubmit ', handleSubmit)
+
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         if (!currentTable) {
             console.error('No current table selected');
