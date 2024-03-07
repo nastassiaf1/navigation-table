@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { TextField } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import { useRemoveTableMutation, useUpdateTableMutation } from '../../api/table.service';
-import { RowTable, Table } from 'interfaces/table';
+import { TableRow, Table } from 'interfaces/table';
 import AddRowDialog from './addRowDialog';
 import EditRowDialog from './editRowDialog';
 import ModalDialogPortal from './../modalDialogPortal';
@@ -35,7 +35,7 @@ export default function Table({ data: initialData }: { data: Table }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [dataToDelete, setDataToDelete] = useState<DataTableToDelete | null>(null);
-  const [editingRow, setEditingRow] = useState<RowTable | null>(null);
+  const [editingRow, setEditingRow] = useState<TableRow | null>(null);
   const [isEditColumnMode, setIsEditColumnMode] = useState(false);
   const [data, setData] = useState(structuredClone(initialData));
   const [updateTable] = useUpdateTableMutation();
@@ -46,7 +46,7 @@ export default function Table({ data: initialData }: { data: Table }) {
     setData(initialData);
   }, [initialData]);
 
-  const openEditModal = (row: RowTable) => {
+  const openEditModal = (row: TableRow) => {
     setEditingRow(row);
     setIsEditModalOpen(true);
   };

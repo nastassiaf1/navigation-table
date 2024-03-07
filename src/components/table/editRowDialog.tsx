@@ -6,14 +6,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import Tooltip from '@mui/material/Tooltip';
 import { useUpdateTableMutation } from '../../api/table.service';
 import { selectCurrentTable } from 'store/selectors/table';
-import { RowTable } from 'interfaces/table';
+import { TableRow } from 'interfaces/table';
 import Spinner from 'components/spinner';
 
 import errorStyle from './../../styles/error.module.scss';
 import formStyle from './../../styles/form.module.scss';
 
 interface EditRowDialogProps {
-  row: RowTable;
+  row: TableRow;
   onClose: () => void;
 }
 

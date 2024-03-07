@@ -1,4 +1,4 @@
-export type RowTable = {
+export type TableRow = {
     id: string,
     [key: string]: string
 };
@@ -13,5 +13,5 @@ export interface Table {
     userId: string;
     name: string;
     columns: TableColumn[];
-    rows?: RowTable[];
+    rows?: TableRow[];
 }
